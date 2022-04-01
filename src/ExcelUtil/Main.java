@@ -13,16 +13,16 @@ public class Main {
 //        }catch(IOException e){
 //            e.printStackTrace();
 //        }
-		String path = "data/0331.xlsx";
-		TableDataDBImp dataHelp = new TableDataDBImp();
-		Object[][] list = dataHelp.getOrderDET();
-
-		try {
-			ExcelUtil.saveTable(path, list, MyTableCustomers.columnNames);
-		} catch (IOException e) {
-			System.out.println(e.toString());
-		}
-		System.out.println("Write Excel End");
+//		String path = "data/0331.xlsx";
+//		TableDataDBImp dataHelp = new TableDataDBImp();
+//		Object[][] list = dataHelp.getOrderDET();
+//
+//		try {
+//			ExcelUtil.saveTable(path, list, MyTableCustomers.columnNames);
+//		} catch (IOException e) {
+//			System.out.println(e.toString());
+//		}
+//		System.out.println("Write Excel End");
 
     }
 }

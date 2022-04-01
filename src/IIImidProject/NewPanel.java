@@ -22,9 +22,7 @@ public class NewPanel extends JPanel {
 
         JTable table = new JTable(new MyTableCustomers());
         table.setFillsViewportHeight(false);
-        //Create the scroll pane and add the table to it.
         JScrollPane scrollPane = new JScrollPane(table);
-        //Add the scroll pane to this panel.
         add(scrollPane,BorderLayout.CENTER);
 
         JButton btn = new JButton("customers下載");
@@ -35,7 +33,7 @@ public class NewPanel extends JPanel {
                 if (jfc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
                     try {
                         String path = jfc.getSelectedFile().getAbsolutePath();
-                        Object[][] list = TableDataDBImp.getCustomers();
+                        Object[][] list = MyTableCustomers.getDBData();
                         ExcelUtil.saveTable(path, list,MyTableCustomers.columnNames);
                         JOptionPane.showMessageDialog(null, "存檔成功");
                     }catch (Exception eee) {
@@ -90,10 +88,7 @@ public class NewPanel extends JPanel {
         JTable table = new JTable(new MyTableOrderDET());
         table.setPreferredScrollableViewportSize(new Dimension(500, 70));
         table.setFillsViewportHeight(false);
-        //Create the scroll pane and add the table to it.
         JScrollPane scrollPane = new JScrollPane(table);
-
-        //Add the scroll pane to this panel.
         add(scrollPane,BorderLayout.CENTER);
 
         JButton btn = new JButton("Order_det下載");
@@ -104,7 +99,7 @@ public class NewPanel extends JPanel {
                 if (jfc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
                     try {
                         String path = jfc.getSelectedFile().getAbsolutePath();
-                        Object[][] list = TableDataDBImp.getOrderDET();
+                        Object[][] list = MyTableOrderDET.getDBData();
                         ExcelUtil.saveTable(path, list, MyTableOrderDET.columnNames);
                         JOptionPane.showMessageDialog(null, "存檔成功");
                     }catch (Exception eee) {

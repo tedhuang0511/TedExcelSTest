@@ -1,15 +1,101 @@
 package IIImidProject;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.util.Properties;
+
 import javax.swing.table.AbstractTableModel;
 
 public class MyTableOrderDET extends AbstractTableModel {
-    private boolean DEBUG = false;
-    public static String[] columnNames = {"OrderID",
-            "Last Name",
-            "OrderID",
-            "OrderID",
-            "OrderID"};
-    private Object[][] data = TableDataDBImp.getOrderDET();
+    public static PreparedStatement pstmt;
+    private static ResultSet res;
+
+    public MyTableOrderDET() {
+        getDBData();
+    }
+
+    public static Object[][] getDBData() {
+        Object[][] dataList = new Object[0][];
+
+        Properties prop = new Properties();
+        prop.put("user", "root");
+        prop.put("password", "");
+
+        try {
+            Connection conn = DriverManager.getConnection(
+                    "jdbc:mysql://localhost/northwind", prop);
+            String q = NorthwindBackOffice.jtfODID.getText();
+            if (q.equals("")) {
+                pstmt = conn.prepareStatement(
+                        "SELECT * FROM orderdetails",
+                        ResultSet.TYPE_SCROLL_INSENSITIVE,
+                        ResultSet.CONCUR_READ_ONLY);
+            } else {
+                pstmt = conn.prepareStatement(
+                        "SELECT * FROM orderdetails WHERE orderID = ?",
+                        ResultSet.TYPE_SCROLL_INSENSITIVE,
+                        ResultSet.CONCUR_READ_ONLY);
+                pstmt.setString(1, q);
+            }
+
+            res = pstmt.executeQuery();
+
+            res.last();
+            int rowCount = res.getRow();
+            res.beforeFirst();
+            dataList = new Object[rowCount][];
+            for (var i = 0; res.next(); i++) {
+
+                String b = res.getString(1);
+                String c = res.getString(2);
+                String d = res.getString(3);
+                String e = res.getString(4);
+                String f = res.getString(5);
+
+
+
+                String[] rowConcate = {b, c, d, e, f};
+
+                dataList[i] = rowConcate;
+
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return dataList;
+    }
+
+    private static String[] getColumnsName() {
+        Properties prop = new Properties();
+        prop.put("user", "root");
+        prop.put("password", "");
+        String[] columns = new String[5];
+        try {
+            Connection conn = DriverManager.getConnection(
+                    "jdbc:mysql://localhost/northwind", prop);
+            pstmt = conn.prepareStatement(
+                    "SELECT * FROM orderdetails",
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY);
+            res = pstmt.executeQuery();
+            ResultSetMetaData rsmd = res.getMetaData();
+            int count = rsmd.getColumnCount();
+
+            for (int x = 0; x < count; x++) {
+                columns[x] = rsmd.getColumnName(x + 1);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return columns;
+    }
+
+    public static String[] columnNames = getColumnsName();
+
+    private Object[][] data = getDBData();
 
     public int getColumnCount() {
         return columnNames.length;
