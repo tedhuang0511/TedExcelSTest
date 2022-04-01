@@ -12,6 +12,7 @@ import javax.swing.*;
 public class NewPanel extends JPanel {
     public NewPanel() {
         setLayout(new BorderLayout());
+
     }
 
     public void customers() {
@@ -45,12 +46,43 @@ public class NewPanel extends JPanel {
         });
         add(btn,BorderLayout.EAST);
     }
+
+    public void employees() {
+        removeAll();
+        add(buildPanel(new NewPanel()));
+        revalidate();
+
+        JTable table = new JTable(new MyTableEmployees());
+        table.setFillsViewportHeight(false);
+        JScrollPane scrollPane = new JScrollPane(table);
+        add(scrollPane,BorderLayout.CENTER);
+
+        JButton btn = new JButton("employees下載");
+        btn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser jfc = new JFileChooser();
+                if (jfc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+                    try {
+                        String path = jfc.getSelectedFile().getAbsolutePath();
+                        Object[][] list = MyTableEmployees.getDBData();
+                        ExcelUtil.saveTable(path, list,MyTableEmployees.columnNames);
+                        JOptionPane.showMessageDialog(null, "存檔成功");
+                    }catch (Exception eee) {
+                        JOptionPane.showMessageDialog(null, "存檔失敗");
+                    }
+                }
+            }
+        });
+        add(btn,BorderLayout.EAST);
+    }
+
     public static JPanel buildPanel(Component c){
         JPanel panel = new NewPanel();
         return panel;
     }
 
-    public void employees() {
+    public void orderDetail() {
         removeAll();
         add(buildPanel(new NewPanel()));
         revalidate();
@@ -84,19 +116,4 @@ public class NewPanel extends JPanel {
         add(btn,BorderLayout.EAST);
     }
 
-    public void redo() {
-
-    }
-
-    public void saveV2() {
-
-    }
-
-    public void saveLines(File svaeFile) throws Exception {
-
-    }
-
-    public void loadLines(File loadFile) throws Exception {
-
-    }
 }

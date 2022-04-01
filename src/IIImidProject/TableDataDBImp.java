@@ -17,10 +17,19 @@ public class TableDataDBImp {
             Connection conn = DriverManager.getConnection(
                     "jdbc:mysql://localhost/northwind", prop);
 
-            PreparedStatement pstmt = conn.prepareStatement(
-                    "SELECT * FROM ORDERDETAILS",
-                    ResultSet.TYPE_SCROLL_INSENSITIVE,
-                    ResultSet.CONCUR_READ_ONLY);
+            String q = NorthwindBackOffice.jtfODID.getText();
+            if(q.equals("")){
+                pstmt = conn.prepareStatement(
+                        "SELECT * FROM ORDERDETAILS",
+                        ResultSet.TYPE_SCROLL_INSENSITIVE,
+                        ResultSet.CONCUR_READ_ONLY);
+            }else{
+                pstmt = conn.prepareStatement(
+                        "SELECT * FROM ORDERDETAILS WHERE ORDERID = ?",
+                        ResultSet.TYPE_SCROLL_INSENSITIVE,
+                        ResultSet.CONCUR_READ_ONLY);
+                pstmt.setString(1,q);
+            }
 
             ResultSet res = pstmt.executeQuery();
             res.last();
@@ -52,7 +61,7 @@ public class TableDataDBImp {
 
             Connection conn = DriverManager.getConnection(
                     "jdbc:mysql://localhost/northwind", prop);
-            String q = NorthwindBackOffice.jtf2.getText();
+            String q = NorthwindBackOffice.jtfCSID.getText();
             if(q.equals("")){
                 pstmt = conn.prepareStatement(
                         "SELECT * FROM CUSTOMERS",
@@ -96,3 +105,4 @@ public class TableDataDBImp {
         return dataList;
     }
 }
+//TODO 把 tableDataDbImp解散  灌到 各自的Mytable(table name)class
