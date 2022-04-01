@@ -6,47 +6,40 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class NorthwindBackOffice extends JFrame {
-    private JButton employees, customers, orders, orderdetails,products,suppliers;
-    public static JTextField jtfCSID,CSID,jtfODID,ODID,jtfLN,LN;
-    private JPanel Jtop = new JPanel(new FlowLayout());
+    private JButton employees, customers, orders, orderdetails;
+    public static JTextField jtf2,jtf3;
     private NewPanel np = new NewPanel();
     public NorthwindBackOffice() {
         setLayout(new BorderLayout());
-        
-        Jtop.setBackground(Color.black);
-        JPanel left = new JPanel(new GridLayout(6, 1));
+        JPanel top = new JPanel(new FlowLayout());
+        top.setBackground(Color.black);
+        JPanel left = new JPanel(new GridLayout(4, 1));
         JPanel right = new JPanel(new FlowLayout());
         right.setBackground(Color.CYAN);
         JPanel south = new JPanel(new FlowLayout());
         south.setBackground(Color.GREEN);
 
-        employees = new JButton("Employees");
-        products = new JButton("Products");
-        suppliers = new JButton("Suppliers");
-        customers = new JButton("Customers");
+        employees = new JButton("employees");
+        customers = new JButton("customers");
         orders = new JButton("Orders");
         orderdetails = new JButton("Orderdetails");
 
-        jtfCSID = new JTextField(10);
-        CSID = new JTextField("輸入customerID");CSID.setEnabled(false);CSID.setBackground(Color.black);CSID.setFont(new Font("諧體",Font.BOLD|Font.ITALIC,12));
-        jtfODID = new JTextField(10);
-        ODID = new JTextField("輸入orderID");ODID.setEnabled(false);ODID.setBackground(Color.black);ODID.setFont(new Font("諧體",Font.BOLD|Font.ITALIC,12));
-        jtfLN = new JTextField(10);
-        LN = new JTextField("輸入LastName");LN.setEnabled(false);LN.setBackground(Color.black);LN.setFont(new Font("諧體",Font.BOLD|Font.ITALIC,12));
+        jtf2 = new JTextField(10);
+        jtf3 = new JTextField("輸入customerID");jtf3.setEnabled(false);jtf3.setBackground(Color.black);jtf3.setFont(new Font("諧體",Font.BOLD|Font.ITALIC,12));
 
+        top.add(jtf3);
+        top.add(jtf2);
 
-        add(Jtop, BorderLayout.NORTH);
+        add(top, BorderLayout.NORTH);
         add(np, BorderLayout.CENTER);
         add(left, BorderLayout.WEST);
         add(right, BorderLayout.EAST);
-        
+        add(south, BorderLayout.SOUTH);
 
         left.add(customers);
         left.add(employees);
         left.add(orders);
         left.add(orderdetails);
-        left.add(products);
-        left.add(suppliers);
 
 
         setSize(1680, 860);
@@ -60,34 +53,15 @@ public class NorthwindBackOffice extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 np.customers();
-                Jtop.removeAll();
-                repaint();
-                Jtop.add(CSID);
-                Jtop.add(jtfCSID);
                 System.out.println("p1");
             }
         });
-        
+
         employees.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                np.employees(); 
-                Jtop.removeAll();
-                repaint();
-                Jtop.add(LN);
-                Jtop.add(jtfLN);
-            }
-        });
-
-        orderdetails.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                np.orderDetail();
-                Jtop.removeAll();
-                repaint();
-                Jtop.add(ODID);
-                Jtop.add(jtfODID);
-                
+            	
+                np.employees();
                 System.out.println("p2");
             }
 

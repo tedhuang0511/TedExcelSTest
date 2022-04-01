@@ -10,14 +10,8 @@ import java.io.File;
 import javax.swing.*;
 
 public class NewPanel extends JPanel {
-	public static JTextField jtf4,jtf5;
-	JPanel top = new JPanel(new FlowLayout());
     public NewPanel() {
         setLayout(new BorderLayout());
-        jtf4 = new JTextField(10);
-        jtf5 = new JTextField("輸入orderId");jtf5.setEnabled(false);jtf5.setBackground(Color.black);jtf5.setFont(new Font("諧體",Font.BOLD|Font.ITALIC,12));
-        
-        
     }
 
     public void customers() {
@@ -51,43 +45,12 @@ public class NewPanel extends JPanel {
         });
         add(btn,BorderLayout.EAST);
     }
-    
-    public void employees() {
-        removeAll();
-        add(buildPanel(new NewPanel()));
-        revalidate();
-
-        JTable table = new JTable(new MyTableEmployees());
-        table.setFillsViewportHeight(false);
-        JScrollPane scrollPane = new JScrollPane(table);
-        add(scrollPane,BorderLayout.CENTER);
-
-        JButton btn = new JButton("employees下載");
-        btn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JFileChooser jfc = new JFileChooser();
-                if (jfc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
-                    try {
-                        String path = jfc.getSelectedFile().getAbsolutePath();
-                        Object[][] list = TableDataDBImp.getEmployees();
-                        ExcelUtil.saveTable(path, list,MyTableCustomers.columnNames);
-                        JOptionPane.showMessageDialog(null, "存檔成功");
-                    }catch (Exception eee) {
-                        JOptionPane.showMessageDialog(null, "存檔失敗");
-                    }
-                }
-            }
-        });
-        add(btn,BorderLayout.EAST);
-    }
-    
     public static JPanel buildPanel(Component c){
         JPanel panel = new NewPanel();
         return panel;
     }
 
-    public void orderDetail() {
+    public void employees() {
         removeAll();
         add(buildPanel(new NewPanel()));
         revalidate();

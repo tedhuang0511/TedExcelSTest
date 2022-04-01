@@ -15,7 +15,7 @@ import java.util.Properties;
 
 public class Test {
     public static void main(String [] args){
-        String s = NorthwindBackOffice.jtfCSID.getText();
+        String s = NorthwindBackOffice.jtf2.getText();
         System.out.println(s);
     }
 }
