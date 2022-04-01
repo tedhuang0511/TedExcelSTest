@@ -79,7 +79,36 @@ public class NewPanel extends JPanel {
         JPanel panel = new NewPanel();
         return panel;
     }
+    public void orders() {
+        removeAll();
+        add(buildPanel(new NewPanel()));
+        revalidate();
 
+        JTable table = new JTable(new MyTableOrders());
+        table.setPreferredScrollableViewportSize(new Dimension(500, 70));
+        table.setFillsViewportHeight(false);
+        JScrollPane scrollPane = new JScrollPane(table);
+        add(scrollPane,BorderLayout.CENTER);
+
+        JButton btn = new JButton("Orders下載");
+        btn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser jfc = new JFileChooser();
+                if (jfc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+                    try {
+                        String path = jfc.getSelectedFile().getAbsolutePath();
+                        Object[][] list = MyTableOrders.getDBData();
+                        ExcelUtil.saveTable(path, list, MyTableOrders.columnNames);
+                        JOptionPane.showMessageDialog(null, "存檔成功");
+                    }catch (Exception eee) {
+                        JOptionPane.showMessageDialog(null, "存檔失敗");
+                    }
+                }
+            }
+        });
+        add(btn,BorderLayout.EAST);
+    }
     public void orderDetail() {
         removeAll();
         add(buildPanel(new NewPanel()));

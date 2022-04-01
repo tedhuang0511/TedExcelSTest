@@ -8,8 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class NorthwindBackOffice extends JFrame {
-    private JButton employees, customers, orders, orderdetails,products,suppliers;
-    public static JTextField jtfCSID, CSID,jtfODID,ODID,jtfLN,LN;
+    private JButton employees, customers, orders, orderdetails,products,suppliers, query;
+    public static JTextField jtfCSID, CSID,jtfODID,ODID,jtfLN,LN,jtfDS,DS,jtfDN,DN;
     private NewPanel np = new NewPanel();
     private JPanel top;
     public NorthwindBackOffice() {
@@ -28,6 +28,7 @@ public class NorthwindBackOffice extends JFrame {
         orderdetails = new JButton("Orderdetails");
         products = new JButton("Products");
         suppliers = new JButton("Suppliers");
+        query = new JButton("Query!");
 
         jtfCSID = new JTextField(10);
         CSID = new JTextField("輸入customerID");CSID.setEnabled(false);CSID.setBackground(Color.black);CSID.setFont(new Font("諧體",Font.BOLD|Font.ITALIC,12));
@@ -35,7 +36,10 @@ public class NorthwindBackOffice extends JFrame {
         ODID = new JTextField("輸入orderID");ODID.setEnabled(false);ODID.setBackground(Color.black);ODID.setFont(new Font("諧體",Font.BOLD|Font.ITALIC,12));
         jtfLN = new JTextField(10);
         LN = new JTextField("輸入LastName");LN.setEnabled(false);LN.setBackground(Color.black);LN.setFont(new Font("諧體",Font.BOLD|Font.ITALIC,12));
-
+        jtfDS = new JTextField(10);
+        DS = new JTextField("DateFrom：");DS.setEnabled(false);DS.setBackground(Color.black);DS.setFont(new Font("諧體",Font.BOLD|Font.ITALIC,12));
+        jtfDN = new JTextField(10);
+        DN = new JTextField("DateTo：");DN.setEnabled(false);DN.setBackground(Color.black);DN.setFont(new Font("諧體",Font.BOLD|Font.ITALIC,12));
 
         add(top, BorderLayout.NORTH);
         add(np, BorderLayout.CENTER);
@@ -56,41 +60,60 @@ public class NorthwindBackOffice extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setListener();
     }
-
+/*
+下方為各種table按鈕的listener。
+ */
     private void setListener() {
-        customers.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                top.removeAll();
-                repaint();
-                top.add(CSID);top.add(jtfCSID);
+        customers.addActionListener(e -> {
+            top.removeAll();
+            repaint();
+            top.add(CSID);top.add(jtfCSID);top.add(query);
+            query.addActionListener(e12 -> {
                 np.customers();
-                System.out.println("cus");
-            }
+                var a1 = query.getActionListeners();
+                query.removeActionListener(a1[0]);
+            });
+            np.customers();
+            System.out.println("cus");
         });
 
-        employees.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                top.removeAll();
-                repaint();
-                top.add(LN);top.add(jtfLN);
+        employees.addActionListener(e -> {
+            top.removeAll();
+            repaint();
+            top.add(LN);top.add(jtfLN);top.add(query);
+            query.addActionListener(e12 -> {
                 np.employees();
-                System.out.println("emp");
-            }
-
+                var a1 = query.getActionListeners();
+                query.removeActionListener(a1[0]);
+            });
+            np.employees();
+            System.out.println("emp");
         });
 
-        orderdetails.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                top.removeAll();
-                repaint();
-                top.add(ODID);top.add(jtfODID);
-                np.orderDetail();
-                System.out.println("od");
-            }
+        orders.addActionListener(e -> {
+            top.removeAll();
+            repaint();
+            top.add(DS);top.add(jtfDS);top.add(DN);top.add(jtfDN);top.add(query);
+            query.addActionListener(e12 -> {
+                np.orders();
+                var a1 = query.getActionListeners();
+                query.removeActionListener(a1[0]);
+            });
+            np.orders();
+            System.out.println("emp");
+        });
 
+        orderdetails.addActionListener(e -> {
+            top.removeAll();
+            repaint();
+            top.add(ODID);top.add(jtfODID);top.add(query);
+            query.addActionListener(e12 -> {
+                np.orderDetail();
+                var a1 = query.getActionListeners();
+                query.removeActionListener(a1[0]);
+            });
+            np.orderDetail();
+            System.out.println("od");
         });
 
     }
