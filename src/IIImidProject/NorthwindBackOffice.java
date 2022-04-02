@@ -135,5 +135,3 @@ public class NorthwindBackOffice extends JFrame {
         new NorthwindBackOffice();
     }
 }
-
-//TODO customer的query按下去之後可以跑出照片
