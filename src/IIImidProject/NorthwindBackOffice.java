@@ -8,8 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class NorthwindBackOffice extends JFrame {
-    private JButton employees, customers, orders, orderdetails,products,suppliers, queryCS, queryEMP, queryOD, queryODET;
-    public static JTextField jtfCSID, CSID,jtfODID,ODID,jtfLN,LN,jtfDS,DS,jtfDN,DN;
+    private JButton employees, customers, orders, orderdetails,products,suppliers, queryCS, queryEMP, queryOD, queryODET,queryPD;
+    public static JTextField jtfCSID, CSID,jtfODID,ODID,jtfLN,LN,jtfDS,DS,jtfDN,DN,jtfPID,PID,jtfPN,PN,jtfSPID,SPID;
     private NewPanel np = new NewPanel();
     private JPanel top;
     public NorthwindBackOffice() {
@@ -32,6 +32,7 @@ public class NorthwindBackOffice extends JFrame {
         queryEMP = new JButton("Query!");
         queryOD = new JButton("Query!");
         queryODET = new JButton("Query!");
+        queryPD = new JButton("Query!");
 
         jtfCSID = new JTextField(10);
         CSID = new JTextField("輸入customerID");CSID.setEnabled(false);CSID.setBackground(Color.black);CSID.setFont(new Font("諧體",Font.BOLD|Font.ITALIC,12));
@@ -40,9 +41,15 @@ public class NorthwindBackOffice extends JFrame {
         jtfLN = new JTextField(10);
         LN = new JTextField("輸入LastName");LN.setEnabled(false);LN.setBackground(Color.black);LN.setFont(new Font("諧體",Font.BOLD|Font.ITALIC,12));
         jtfDS = new JTextField(10);
-        DS = new JTextField("DateFrom：");DS.setEnabled(false);DS.setBackground(Color.black);DS.setFont(new Font("諧體",Font.BOLD|Font.ITALIC,12));
+        DS = new JTextField("OrderDateFrom：");DS.setEnabled(false);DS.setBackground(Color.black);DS.setFont(new Font("諧體",Font.BOLD|Font.ITALIC,12));
         jtfDN = new JTextField(10);
-        DN = new JTextField("DateTo：");DN.setEnabled(false);DN.setBackground(Color.black);DN.setFont(new Font("諧體",Font.BOLD|Font.ITALIC,12));
+        DN = new JTextField("OrderDateTo：");DN.setEnabled(false);DN.setBackground(Color.black);DN.setFont(new Font("諧體",Font.BOLD|Font.ITALIC,12));
+        jtfPID = new JTextField(10);
+        PID = new JTextField("輸入ProductID：");PID.setEnabled(false);PID.setBackground(Color.black);PID.setFont(new Font("諧體",Font.BOLD|Font.ITALIC,12));
+        jtfPN = new JTextField(10);
+        PN = new JTextField("輸入ProductName：");PN.setEnabled(false);PN.setBackground(Color.black);PN.setFont(new Font("諧體",Font.BOLD|Font.ITALIC,12));
+        jtfSPID = new JTextField(10);
+        SPID = new JTextField("輸入SupplierID");SPID.setEnabled(false);SPID.setBackground(Color.black);SPID.setFont(new Font("諧體",Font.BOLD|Font.ITALIC,12));
 
         add(top, BorderLayout.NORTH);
         add(np, BorderLayout.CENTER);
@@ -72,7 +79,7 @@ public class NorthwindBackOffice extends JFrame {
             repaint();
             top.add(CSID);top.add(jtfCSID);top.add(queryCS);
             np.customers();
-            System.out.println("cus");
+            System.out.println("presscustomers");
         });
         queryCS.addActionListener(e -> {
             np.customers();repaint();
@@ -83,7 +90,6 @@ public class NorthwindBackOffice extends JFrame {
             repaint();
             top.add(LN);top.add(jtfLN);top.add(queryEMP);
             np.employees();
-            System.out.println("emp");
         });
 
         queryEMP.addActionListener(e -> {
@@ -95,7 +101,6 @@ public class NorthwindBackOffice extends JFrame {
             repaint();
             top.add(ODID);top.add(jtfODID);top.add(DS);top.add(jtfDS);top.add(DN);top.add(jtfDN);top.add(queryOD);
             np.orders();
-            System.out.println("emp");
         });
         queryOD.addActionListener(e -> {
             np.orders(); repaint();
@@ -106,10 +111,19 @@ public class NorthwindBackOffice extends JFrame {
             repaint();
             top.add(ODID);top.add(jtfODID);top.add(queryODET);
             np.orderDetail();
-            System.out.println("od");
         });
         queryODET.addActionListener(e ->{
             np.orderDetail();repaint();
+        });
+
+        products.addActionListener(e -> {
+            top.removeAll();
+            repaint();
+            top.add(PID);top.add(jtfPID);top.add(PN);top.add(jtfPN);top.add(SPID);top.add(jtfSPID);top.add(queryPD);
+            np.products();
+        });
+        queryPD.addActionListener(e ->{
+            np.products();repaint();
         });
 
     }
@@ -119,4 +133,4 @@ public class NorthwindBackOffice extends JFrame {
     }
 }
 
-
+//TODO customer的query按下去之後可以跑出照片

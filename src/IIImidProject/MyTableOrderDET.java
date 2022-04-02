@@ -24,9 +24,8 @@ public class MyTableOrderDET extends AbstractTableModel {
         prop.put("user", "root");
         prop.put("password", "");
 
-        try {
-            Connection conn = DriverManager.getConnection(
-                    "jdbc:mysql://localhost/northwind", prop);
+        try (Connection conn = DriverManager.getConnection(
+                "jdbc:mysql://localhost/northwind", prop)){
             String q = NorthwindBackOffice.jtfODID.getText();
             if (q.equals("")) {
                 pstmt = conn.prepareStatement(
@@ -72,10 +71,9 @@ public class MyTableOrderDET extends AbstractTableModel {
         Properties prop = new Properties();
         prop.put("user", "root");
         prop.put("password", "");
-        String[] columns = new String[5];
-        try {
-            Connection conn = DriverManager.getConnection(
-                    "jdbc:mysql://localhost/northwind", prop);
+        String[] columns = new String[5]; //欄位數量
+        try (Connection conn = DriverManager.getConnection(
+                "jdbc:mysql://localhost/northwind", prop)){
             pstmt = conn.prepareStatement(
                     "SELECT * FROM orderdetails",
                     ResultSet.TYPE_SCROLL_INSENSITIVE,

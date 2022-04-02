@@ -2,6 +2,7 @@ package IIImidProject;
 
 import javax.swing.table.AbstractTableModel;
 import java.sql.*;
+import java.util.Map;
 import java.util.Properties;
 
 public class MyTableOrders extends AbstractTableModel {
@@ -14,14 +15,12 @@ public class MyTableOrders extends AbstractTableModel {
 
     public static Object[][] getDBData() {
         Object[][] dataList = new Object[0][];
-
         Properties prop = new Properties();
         prop.put("user", "root");
         prop.put("password", "");
+        try (Connection conn = DriverManager.getConnection(
+                "jdbc:mysql://localhost/northwind", prop)){
 
-        try {
-            Connection conn = DriverManager.getConnection(
-                    "jdbc:mysql://localhost/northwind", prop);
             String A = NorthwindBackOffice.jtfDS.getText();
             String B = NorthwindBackOffice.jtfDN.getText();
             String C = NorthwindBackOffice.jtfODID.getText();
@@ -38,14 +37,13 @@ public class MyTableOrders extends AbstractTableModel {
                         ResultSet.CONCUR_READ_ONLY);
                 pstmt.setString(1, A);
                 pstmt.setString(2, B);
+            } else if(!(C.equals(""))){
+                pstmt = conn.prepareStatement(
+                        "SELECT * FROM orders WHERE OrderID = ?",
+                        ResultSet.TYPE_SCROLL_INSENSITIVE,
+                        ResultSet.CONCUR_READ_ONLY);
+                pstmt.setString(1, C);
             }
-//            else{
-//                pstmt = conn.prepareStatement(
-//                        "SELECT * FROM orders WHERE OrderID = ?",
-//                        ResultSet.TYPE_SCROLL_INSENSITIVE,
-//                        ResultSet.CONCUR_READ_ONLY);
-//                pstmt.setString(1, C);
-//            }
 
             res = pstmt.executeQuery();
 
@@ -87,9 +85,8 @@ public class MyTableOrders extends AbstractTableModel {
         prop.put("user", "root");
         prop.put("password", "");
         String[] columns = new String[14];
-        try {
-            Connection conn = DriverManager.getConnection(
-                    "jdbc:mysql://localhost/northwind", prop);
+        try (Connection conn = DriverManager.getConnection(
+                "jdbc:mysql://localhost/northwind", prop)){
             pstmt = conn.prepareStatement(
                     "SELECT * FROM orders",
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
