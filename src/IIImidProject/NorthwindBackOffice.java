@@ -21,7 +21,9 @@ public class NorthwindBackOffice extends JFrame {
         right.setBackground(Color.CYAN);
         JPanel south = new JPanel(new FlowLayout());
         south.setBackground(Color.GREEN);
-
+/*
+按鈕區域
+ */
         employees = new JButton("Employees");
         customers = new JButton("Customers");
         orders = new JButton("Orders");
@@ -34,7 +36,9 @@ public class NorthwindBackOffice extends JFrame {
         queryODET = new JButton("Query!");
         queryPD = new JButton("Query!");
         showPic = new JButton("showPic!");
-
+/*
+上方搜尋框與標籤欄位
+ */
         jtfCSID = new JTextField(10);
         CSID = new JTextField("輸入customerID");CSID.setEnabled(false);CSID.setBackground(Color.black);CSID.setFont(new Font("諧體",Font.BOLD|Font.ITALIC,12));
         jtfODID = new JTextField(10);
@@ -133,5 +137,7 @@ public class NorthwindBackOffice extends JFrame {
 
     public static void main(String[] args) {
         new NorthwindBackOffice();
+        //todo 表格放入Jbutton?
+        //todo 新增.csv下載按鈕跟.txt
     }
 }

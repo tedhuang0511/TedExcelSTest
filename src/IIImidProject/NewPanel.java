@@ -10,6 +10,7 @@ import java.io.File;
 import javax.swing.*;
 
 public class NewPanel extends JPanel {
+
     public NewPanel() {
         setLayout(new BorderLayout());
     }
@@ -24,20 +25,22 @@ public class NewPanel extends JPanel {
         JScrollPane scrollPane = new JScrollPane(table);
         add(scrollPane,BorderLayout.CENTER);
 
+
         JButton btn = new JButton("customers下載");
-        btn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JFileChooser jfc = new JFileChooser();
-                if (jfc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
-                    try {
-                        String path = jfc.getSelectedFile().getAbsolutePath();
-                        Object[][] list = MyTableCustomers.getDBData();
-                        ExcelUtil.saveTable(path, list,MyTableCustomers.columnNames);
-                        JOptionPane.showMessageDialog(null, "存檔成功");
-                    }catch (Exception eee) {
-                        JOptionPane.showMessageDialog(null, "存檔失敗");
-                    }
+        btn.addActionListener(e -> {
+            JFileChooser jfc = new JFileChooser();
+            ExtensionFileFilter filter = new ExtensionFileFilter();//變更下拉是選單的副檔名選項
+            filter.addExtension("xlsx"); filter.setDescription("Excel檔(*.xlsx)");//變更下拉是選單的副檔名選項
+            jfc.addChoosableFileFilter(filter);//變更下拉是選單的副檔名選項
+            jfc.setAcceptAllFileFilterUsed(false);//變更下拉是選單的副檔名選項
+            if (jfc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+                try {
+                    String path = jfc.getSelectedFile().getAbsolutePath();
+                    Object[][] list = MyTableCustomers.getDBData();
+                    ExcelUtil.saveTable(path, list,MyTableCustomers.columnNames);
+                    JOptionPane.showMessageDialog(null, "存檔成功");
+                }catch (Exception eee) {
+                    JOptionPane.showMessageDialog(null, "存檔失敗");
                 }
             }
         });
@@ -132,7 +135,6 @@ public class NewPanel extends JPanel {
         });
         add(btn,BorderLayout.EAST);
     }
-
     public void products() {
         removeAll();
         add(buildPanel(new NewPanel()));
