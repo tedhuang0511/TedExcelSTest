@@ -2,13 +2,13 @@ package IIImidProject;
 /*
 蒿蒿爽爽歐歐
  */
+import ExcelUtil.PictureGetter;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class NorthwindBackOffice extends JFrame {
-    private JButton employees, customers, orders, orderdetails,products,suppliers, queryCS, queryEMP, queryOD, queryODET,queryPD;
+    private JButton employees, customers, orders, orderdetails,products,suppliers, queryCS, queryEMP, queryOD, queryODET,queryPD,showPic;
     public static JTextField jtfCSID, CSID,jtfODID,ODID,jtfLN,LN,jtfDS,DS,jtfDN,DN,jtfPID,PID,jtfPN,PN,jtfSPID,SPID;
     private NewPanel np = new NewPanel();
     private JPanel top;
@@ -33,6 +33,7 @@ public class NorthwindBackOffice extends JFrame {
         queryOD = new JButton("Query!");
         queryODET = new JButton("Query!");
         queryPD = new JButton("Query!");
+        showPic = new JButton("showPic!");
 
         jtfCSID = new JTextField(10);
         CSID = new JTextField("輸入customerID");CSID.setEnabled(false);CSID.setBackground(Color.black);CSID.setFont(new Font("諧體",Font.BOLD|Font.ITALIC,12));
@@ -88,12 +89,14 @@ public class NorthwindBackOffice extends JFrame {
         employees.addActionListener(e -> {
             top.removeAll();
             repaint();
-            top.add(LN);top.add(jtfLN);top.add(queryEMP);
+            top.add(LN);top.add(jtfLN);top.add(queryEMP);top.add(showPic);
             np.employees();
         });
-
         queryEMP.addActionListener(e -> {
             np.employees();repaint();
+        });
+        showPic.addActionListener(e ->{
+            new PictureGetter();
         });
 
         orders.addActionListener(e -> {

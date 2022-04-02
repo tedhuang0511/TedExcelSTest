@@ -1,5 +1,7 @@
 package IIImidProject;
 
+import java.io.File;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -101,6 +103,28 @@ public class MyTableEmployees extends AbstractTableModel {
             System.out.println(e);
         }
         return columns;
+    }
+
+    public static URL getEmpPhotoURL() {
+        URL url=null;
+        Properties prop = new Properties();
+        prop.put("user", "root");
+        prop.put("password", "");
+        try (Connection conn = DriverManager.getConnection(
+                "jdbc:mysql://localhost/northwind", prop)){
+            String q = NorthwindBackOffice.jtfLN.getText();
+            pstmt = conn.prepareStatement(
+                    "SELECT PhotoPath FROM EMPLOYEES WHERE LASTNAME = ?",
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY);
+            pstmt.setString(1,q);
+            res = pstmt.executeQuery();
+            res.next();
+            url = new URL(res.getString(1));
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return url;
     }
 
     public static String[] columnNames = getColumnsName();

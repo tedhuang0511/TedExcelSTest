@@ -139,8 +139,8 @@ public class NewPanel extends JPanel {
         revalidate();
 
         JTable table = new JTable(new MyTableProducts());
-        table.setPreferredScrollableViewportSize(new Dimension(500, 70));
-        table.setFillsViewportHeight(false);
+//        table.setPreferredScrollableViewportSize(new Dimension(500, 70));          todo 可有可無的兩行?
+//        table.setFillsViewportHeight(false);
         JScrollPane scrollPane = new JScrollPane(table);
         add(scrollPane,BorderLayout.CENTER);
 
