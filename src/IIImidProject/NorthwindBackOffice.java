@@ -8,7 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class NorthwindBackOffice extends JFrame {
-    private JButton employees, customers, orders, orderdetails,products,suppliers, query;
+    private JButton employees, customers, orders, orderdetails,products,suppliers, queryCS, queryEMP, queryOD, queryODET;
     public static JTextField jtfCSID, CSID,jtfODID,ODID,jtfLN,LN,jtfDS,DS,jtfDN,DN;
     private NewPanel np = new NewPanel();
     private JPanel top;
@@ -28,7 +28,10 @@ public class NorthwindBackOffice extends JFrame {
         orderdetails = new JButton("Orderdetails");
         products = new JButton("Products");
         suppliers = new JButton("Suppliers");
-        query = new JButton("Query!");
+        queryCS = new JButton("Query!");
+        queryEMP = new JButton("Query!");
+        queryOD = new JButton("Query!");
+        queryODET = new JButton("Query!");
 
         jtfCSID = new JTextField(10);
         CSID = new JTextField("輸入customerID");CSID.setEnabled(false);CSID.setBackground(Color.black);CSID.setFont(new Font("諧體",Font.BOLD|Font.ITALIC,12));
@@ -67,53 +70,46 @@ public class NorthwindBackOffice extends JFrame {
         customers.addActionListener(e -> {
             top.removeAll();
             repaint();
-            top.add(CSID);top.add(jtfCSID);top.add(query);
-            query.addActionListener(e12 -> {
-                np.customers();
-                var a1 = query.getActionListeners();
-                query.removeActionListener(a1[0]);
-            });
+            top.add(CSID);top.add(jtfCSID);top.add(queryCS);
             np.customers();
             System.out.println("cus");
+        });
+        queryCS.addActionListener(e -> {
+            np.customers();repaint();
         });
 
         employees.addActionListener(e -> {
             top.removeAll();
             repaint();
-            top.add(LN);top.add(jtfLN);top.add(query);
-            query.addActionListener(e12 -> {
-                np.employees();
-                var a1 = query.getActionListeners();
-                query.removeActionListener(a1[0]);
-            });
+            top.add(LN);top.add(jtfLN);top.add(queryEMP);
             np.employees();
             System.out.println("emp");
+        });
+
+        queryEMP.addActionListener(e -> {
+            np.employees();repaint();
         });
 
         orders.addActionListener(e -> {
             top.removeAll();
             repaint();
-            top.add(DS);top.add(jtfDS);top.add(DN);top.add(jtfDN);top.add(query);
-            query.addActionListener(e12 -> {
-                np.orders();
-                var a1 = query.getActionListeners();
-                query.removeActionListener(a1[0]);
-            });
+            top.add(ODID);top.add(jtfODID);top.add(DS);top.add(jtfDS);top.add(DN);top.add(jtfDN);top.add(queryOD);
             np.orders();
             System.out.println("emp");
+        });
+        queryOD.addActionListener(e -> {
+            np.orders(); repaint();
         });
 
         orderdetails.addActionListener(e -> {
             top.removeAll();
             repaint();
-            top.add(ODID);top.add(jtfODID);top.add(query);
-            query.addActionListener(e12 -> {
-                np.orderDetail();
-                var a1 = query.getActionListeners();
-                query.removeActionListener(a1[0]);
-            });
+            top.add(ODID);top.add(jtfODID);top.add(queryODET);
             np.orderDetail();
             System.out.println("od");
+        });
+        queryODET.addActionListener(e ->{
+            np.orderDetail();repaint();
         });
 
     }

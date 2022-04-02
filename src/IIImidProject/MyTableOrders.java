@@ -24,12 +24,14 @@ public class MyTableOrders extends AbstractTableModel {
                     "jdbc:mysql://localhost/northwind", prop);
             String A = NorthwindBackOffice.jtfDS.getText();
             String B = NorthwindBackOffice.jtfDN.getText();
-            if (A.equals("")&&B.equals("")) {
+            String C = NorthwindBackOffice.jtfODID.getText();
+
+            if (A.equals("")&&B.equals("")&&C.equals("")) {
                 pstmt = conn.prepareStatement(
                         "SELECT * FROM orders",
                         ResultSet.TYPE_SCROLL_INSENSITIVE,
                         ResultSet.CONCUR_READ_ONLY);
-            } else {
+            } else if(!(A.equals("")) || !(B.equals(""))){
                 pstmt = conn.prepareStatement(
                         "SELECT * FROM orders WHERE OrderDate BETWEEN ? AND ?",
                         ResultSet.TYPE_SCROLL_INSENSITIVE,
@@ -37,6 +39,13 @@ public class MyTableOrders extends AbstractTableModel {
                 pstmt.setString(1, A);
                 pstmt.setString(2, B);
             }
+//            else{
+//                pstmt = conn.prepareStatement(
+//                        "SELECT * FROM orders WHERE OrderID = ?",
+//                        ResultSet.TYPE_SCROLL_INSENSITIVE,
+//                        ResultSet.CONCUR_READ_ONLY);
+//                pstmt.setString(1, C);
+//            }
 
             res = pstmt.executeQuery();
 
