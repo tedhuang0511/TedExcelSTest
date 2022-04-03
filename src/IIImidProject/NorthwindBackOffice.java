@@ -8,10 +8,10 @@ import javax.swing.*;
 import java.awt.*;
 
 public class NorthwindBackOffice extends JFrame {
-    private JButton employees, customers, orders, orderdetails,products,suppliers, queryCS, queryEMP, queryOD, queryODET,queryPD,showPic;
+    final private JButton employees, customers, orders, orderdetails,products, suppliers, queryCS, queryEMP, queryOD, queryODET,queryPD,showPic;
     public static JTextField jtfCSID, CSID,jtfODID,ODID,jtfLN,LN,jtfDS,DS,jtfDN,DN,jtfPID,PID,jtfPN,PN,jtfSPID,SPID;
-    private NewPanel np = new NewPanel();
-    private JPanel top;
+    final private NewPanel np = new NewPanel();
+    final private JPanel top;
     public NorthwindBackOffice() {
         setLayout(new BorderLayout());
         top = new JPanel(new FlowLayout());
@@ -94,13 +94,11 @@ public class NorthwindBackOffice extends JFrame {
             top.removeAll();
             repaint();
             top.add(LN);top.add(jtfLN);top.add(queryEMP);top.add(showPic);
+            showPic.addActionListener(e1 -> new PictureGetter()); //showPic按鈕listener
             np.employees();
         });
         queryEMP.addActionListener(e -> {
             np.employees();repaint();
-        });
-        showPic.addActionListener(e ->{
-            new PictureGetter();
         });
 
         orders.addActionListener(e -> {
