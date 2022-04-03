@@ -3,15 +3,12 @@ package IIImidProject;
 import ExcelUtil.ExcelUtil;
 import ExcelUtil.CSVUtil;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
+
 
 import javax.swing.*;
 
 public class NewPanel extends JPanel {
-    JPanel right = new JPanel(new GridLayout(3, 1));
-    public NewPanel() {
+        public NewPanel() {
         setLayout(new BorderLayout());
     }
 
