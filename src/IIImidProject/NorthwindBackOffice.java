@@ -2,7 +2,6 @@ package IIImidProject;
 /*
 蒿蒿爽爽歐歐
  */
-import ExcelUtil.PictureGetter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,12 +11,13 @@ public class NorthwindBackOffice extends JFrame {
     public static JTextField jtfCSID, CSID,jtfODID,ODID,jtfLN,LN,jtfDS,DS,jtfDN,DN,jtfPID,PID,jtfPN,PN,jtfSPID,SPID;
     final private NewPanel np = new NewPanel();
     final private JPanel top;
+    public static JPanel right;
     public NorthwindBackOffice() {
         setLayout(new BorderLayout());
         top = new JPanel(new FlowLayout());
         top.setBackground(Color.black);
         JPanel left = new JPanel(new GridLayout(6, 1));
-        JPanel right = new JPanel(new FlowLayout());
+        right = new JPanel(new GridLayout(3, 1));
         right.setBackground(Color.CYAN);
         JPanel south = new JPanel(new FlowLayout());
         south.setBackground(Color.GREEN);

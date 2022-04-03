@@ -1,8 +1,9 @@
-package ExcelUtil;
+package IIImidProject;
 
 import IIImidProject.MyTableEmployees;
 import javax.swing.*;
 import java.awt.*;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 public class PictureGetter extends JFrame {

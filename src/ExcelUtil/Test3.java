@@ -1,108 +1,155 @@
 package ExcelUtil;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.Properties;
 
-public class Test3 {
-    public static PreparedStatement pstmt;
-    public static void main(String[] args) {
-        try {
-            Properties prop = new Properties();
-            prop.put("user", "root");
-            prop.put("password", "");
-            Connection conn = DriverManager.getConnection(
-                    "jdbc:mysql://localhost/iii", prop);
+public class Test3 extends JFrame{
+    private JTable table;
+    private MyModel myModel;
+    private String[] header = {"編號","名稱","地址","電話"};
 
-            // 3. SQL statement
-            pstmt = conn.prepareStatement(
-                    "INSERT INTO animals (animal_id,animal_place,animal_kind,animal_colour,animal_sex,animal_bodytype,animal_age,animal_update,album_file,animal_Variety) " +
-                            "VALUES (?,?,?,?,?,?,?,?,?,?)");
+    public Test3() {
 
-            // 1. 抓 json 回來
-            fetchJSON();
-            // 2. parse json
-            // 3. insert into
-            System.out.println("OK");
-        }catch(Exception e) {
-            System.out.println(e.toString());
-        }
+        setLayout(new BorderLayout());
+
+        myModel = new MyModel();
+        table = new JTable(myModel);
+        JScrollPane jsp = new JScrollPane(table);
+        add(jsp, BorderLayout.CENTER);
+
+        setSize(640, 480);
+        setVisible(true);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
-    private static void fetchJSON() {
+    public static Object[][] getDBData() {
+        Properties prop = new Properties();
+        prop.put("user", "root");
+        prop.put("password", "");
+
+        String sql = "SELECT * FROM table01";
+        Object[][] dataList = new Object[0][];
         try {
-            URL url = new URL("https://data.coa.gov.tw/Service/OpenData/TransService.aspx?UnitId=QcbUEzN6E6DL");
-            HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+            Connection conn = DriverManager.getConnection(
+                    "jdbc:mysql://localhost/test", prop);
+            PreparedStatement ps = conn.prepareStatement(
+                    sql,
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY);
 
-            BufferedReader reader =
-                    new BufferedReader(
-                            new InputStreamReader(conn.getInputStream()));
-            String line; StringBuffer sb = new StringBuffer();
-            while ( (line = reader.readLine()) != null) {
-                sb.append(line);
+            ResultSet rs = ps.executeQuery();
+            rs.last();
+            int rowCount = rs.getRow();
+            rs.beforeFirst();
+            dataList = new Object[rowCount][];
+            for (var i = 0; rs.next(); i++) {
+                String b = rs.getString(1);
+                String c = rs.getString(2);
+                String d = rs.getString(3);
+                String e = rs.getString(4);
+
+                String[] rowConcate = {b, c, d, e};
+                dataList[i] = rowConcate;
             }
-            reader.close();
-            conn.disconnect();
 
-            parseJSON(sb.toString());
 
         } catch (Exception e) {
             System.out.println(e.toString());
         }
+        return dataList;
     }
 
-    private static void parseJSON(String json) {
-        try {
-            JSONArray root = new JSONArray(json);
-            for (int i=0; i<root.length(); i++) {
-                JSONObject row = root.getJSONObject(i);
-                int id = row.getInt("animal_id");
-                String place = row.getString("animal_place");
-                String kind = row.getString("animal_kind");
-                String color = row.getString("animal_colour");
-                String sex = row.getString("animal_sex");
-                String bodytype = row.getString("animal_bodytype");
-                String age = row.getString("animal_age");
-                String update = row.getString("animal_update");
-                String img = row.getString("album_file");
-                String variety = row.getString("animal_Variety");
+    public class MyModel extends DefaultTableModel {
+        private static ResultSet rs;
+        private static int rowCount;
 
-                insertData(id, place, kind, color, sex, bodytype, age, update, img, variety);
+        public MyModel() {
+            getDBData();
+        }
 
+        public static Object[][] getDBData() {
+            Properties prop = new Properties();
+            prop.put("user", "root");
+            prop.put("password", "");
+
+            String sql = "SELECT * FROM table01";
+            Object[][] dataList = new Object[0][];
+            try {
+                Connection conn = DriverManager.getConnection(
+                        "jdbc:mysql://localhost/test", prop);
+                PreparedStatement ps = conn.prepareStatement(
+                        sql,
+                        ResultSet.TYPE_SCROLL_INSENSITIVE,
+                        ResultSet.CONCUR_READ_ONLY);
+
+                rs = ps.executeQuery();
+                rs.last();
+                rowCount = rs.getRow();
+                rs.beforeFirst();
+                dataList = new Object[rowCount][];
+                for (var i = 0; rs.next(); i++) {
+                    String b = rs.getString(1);
+                    String c = rs.getString(2);
+                    String d = rs.getString(3);
+                    String e = rs.getString(4);
+
+                    String[] rowConcate = {b, c, d, e};
+                    dataList[i] = rowConcate;
+                }
+
+
+            } catch (Exception e) {
+                System.out.println(e.toString());
             }
-        }catch(Exception e) {
-            System.out.println(e.toString());
+            return dataList;
+        }
+
+        @Override
+        public int getColumnCount() {
+            return 4;
+        }
+
+        @Override
+        public String getColumnName(int column) {
+            return header[column];
+        }
+
+        @Override
+        public int getRowCount() {
+            return rowCount;
+        }
+
+        @Override
+        public Object getValueAt(int row, int column) {
+            Object ret;
+            try {
+                rs.absolute(row + 1);
+                InputStream in = rs.getBinaryStream(column +1);
+                ObjectInputStream oin = new ObjectInputStream(in);
+                Object obj = oin.readObject();
+                oin.close();
+                ret = obj;
+            } catch (Exception e) {
+                ret = "XXX";
+            }
+            return ret;
+        }
+
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false;
         }
     }
-
-    private static void insertData(int id, String place,String kind,String color,String sex,
-                                   String bodytype,String age,String update,String img,String variety) {
-        try {
-            pstmt.setInt(1,id);
-            pstmt.setString(2,place);
-            pstmt.setString(3,kind);
-            pstmt.setString(4,color);
-            pstmt.setString(5,sex);
-            pstmt.setString(6,bodytype);
-            pstmt.setString(7,age);
-            pstmt.setString(8,update);
-            pstmt.setString(9,img);
-            pstmt.setString(10,variety);
-
-
-            // 4. execute SQL statement
-            pstmt.executeUpdate();
-        }catch(Exception e) {
-            System.out.println(e.toString());
-        }
+    public static void main(String[] args) {
+        new Test3();
     }
+
 }

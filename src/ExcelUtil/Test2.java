@@ -1,5 +1,9 @@
 package ExcelUtil;
 
+import javax.swing.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectOutputStream;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,32 +11,38 @@ import java.util.Properties;
 
 public class Test2 {
     public static void main(String[] args){
-
-        List<String[]> dataList = new ArrayList<String[]>();
+        JButton btn = new JButton();
         try {
             Properties prop = new Properties();
             prop.put("user", "root");
             prop.put("password", "");
 
             Connection conn = DriverManager.getConnection(
-                    "jdbc:mysql://localhost/northwind", prop);
+                    "jdbc:mysql://localhost/test", prop);
 
             PreparedStatement pstmt = conn.prepareStatement(
-                    "SELECT * FROM ORDERDETAILS WHERE ORDERID = ?");
-            pstmt.setInt(1, 10248);
-            ResultSet res = pstmt.executeQuery();
-            while(res.next()){
-                String orderid = String.valueOf(res.getInt("OrderID"));
-                String pid = String.valueOf(res.getInt("ProductID"));
-                String up = String.valueOf(res.getBigDecimal("UnitPrice"));
-                String qty = String.valueOf(res.getInt("Quantity"));
-                String dc = String.valueOf(res.getDouble("Discount"));
-                String[] rowConcate = {orderid,pid,up,qty,dc};
-                dataList.add(rowConcate);
+                    "INSERT INTO TABLE01 (name,picpath,jbutton)"+
+                            "VALUES (?,?,?)"
+            );
+            pstmt.setString(1,"ted");
+            pstmt.setString(2,"https://www.collinsdictionary.com/images/full/dog_230497594.jpg");
+            ByteArrayOutputStream bao = new ByteArrayOutputStream();
+            ObjectOutputStream oout = new ObjectOutputStream(bao);
+            oout.writeObject(btn);
+            byte[] s1Ary = bao.toByteArray();
+            System.out.println(s1Ary.length);
 
+
+            pstmt.setBinaryStream(3,new ByteArrayInputStream(s1Ary));
+            int n = pstmt.executeUpdate();
+            if(n>0){
+                System.out.println("ok");
+            }else{
+                System.out.println("failed");
             }
-        } catch (SQLException e) {
-            System.out.println(e.toString());
+
+        } catch (Exception e) {
+            System.out.println(e);
         }
 
     }
