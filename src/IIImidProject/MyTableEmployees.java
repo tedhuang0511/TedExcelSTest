@@ -50,7 +50,7 @@ public class MyTableEmployees extends AbstractTableModel {
             dataList = new Object[rowCount][];
             for (var i = 0; res.next(); i++) {
                 String[] columns = new String[columnCount];
-                for(var k = 0; k<columnCount; k++){
+                for(var k = 0; k<columnCount-1; k++){
                     String oneRowColumn = res.getString(k+1);
                     columns[k] = oneRowColumn;
                 }
@@ -77,7 +77,7 @@ public class MyTableEmployees extends AbstractTableModel {
             ResultSetMetaData rsmd = res.getMetaData();
             int count = rsmd.getColumnCount();
             columns = new String[count];
-            for (int x = 0; x < count; x++) {
+            for (int x = 0; x < count-1; x++) {
                 columns[x] = rsmd.getColumnName(x + 1);
             }
         } catch (Exception e) {

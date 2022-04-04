@@ -155,7 +155,6 @@ public class NorthwindBackOffice extends JFrame {
     public static void main(String[] args) {
         new NorthwindBackOffice();
         //TODO 畫面下方加上JTextarea可輸入SQL語法做增刪修?
-        //TODO 把employees table的photopath欄位顯示正常URL
         //TODO JF下方新增1.回到第一頁 2.上一頁 3.下一頁 4.最後一頁
     }
 }

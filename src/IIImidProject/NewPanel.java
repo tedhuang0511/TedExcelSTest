@@ -3,6 +3,7 @@ package IIImidProject;
 import java.awt.*;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
@@ -59,6 +60,7 @@ public class NewPanel extends JPanel {
         JTable table = new JTable(new MyTableEmployees());
         table.addColumn(new TableColumn(18,75,new ButtonRenderer(),new ButtonEditor()));
         table.setFillsViewportHeight(false);
+        table.getColumnModel().removeColumn( table.getColumnModel().getColumn(18)); //把dummy column移除掉
         JScrollPane scrollPane = new JScrollPane(table);
         add(scrollPane,BorderLayout.CENTER);
 
