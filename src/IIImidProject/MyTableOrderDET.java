@@ -47,19 +47,12 @@ public class MyTableOrderDET extends AbstractTableModel {
             res.beforeFirst();
             dataList = new Object[rowCount][];
             for (var i = 0; res.next(); i++) {
-
-                String b = res.getString(1);
-                String c = res.getString(2);
-                String d = res.getString(3);
-                String e = res.getString(4);
-                String f = res.getString(5);
-
-
-
-                String[] rowConcate = {b, c, d, e, f};
-
-                dataList[i] = rowConcate;
-
+                String[] columns = new String[5];
+                for(var k = 0; k<5; k++){
+                    String oneRowColumn = res.getString(k+1);
+                    columns[k] = oneRowColumn;
+                }
+                dataList[i] = columns;
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -93,7 +86,7 @@ public class MyTableOrderDET extends AbstractTableModel {
 
     public static String[] columnNames = getColumnsName();
 
-    private Object[][] data = getDBData();
+    private final Object[][] data = getDBData();
 
     public int getColumnCount() {
         return columnNames.length;

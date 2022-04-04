@@ -48,31 +48,14 @@ public class MyTableEmployees extends AbstractTableModel {
             int rowCount = res.getRow();
             res.beforeFirst();
             dataList = new Object[rowCount][];
+
             for (var i = 0; res.next(); i++) {
-                //TODO 再加一個FOR迴圈改寫
-                String b = res.getString(1);
-                String c = res.getString(2);
-                String d = res.getString(3);
-                String e = res.getString(4);
-                String f = res.getString(5);
-                String g = res.getString(6);
-                String h = res.getString(7);
-                String O = res.getString(8);
-                String j = res.getString(9);
-                String k = res.getString(10);
-                String l = res.getString(11);
-                String A = res.getString(12);
-                String B = res.getString(13);
-                String C = res.getString(14);
-                String D = res.getString(15);
-                String E = res.getString(16);
-                String F = res.getString(17);
-                String G = res.getString(18);
-
-                String[] rowConcate = {b, c, d, e, f, g, h, O, j, k, l, A, B, C, D, E, F, G};
-
-                dataList[i] = rowConcate;
-
+                String[] columns = new String[18];
+                for(var k = 0; k<18; k++){
+                    String oneRowColumn = res.getString(k+1);
+                    columns[k] = oneRowColumn;
+                }
+                dataList[i] = columns;
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -147,9 +130,7 @@ public class MyTableEmployees extends AbstractTableModel {
                 return data[row][col];
             case 17:
                 final JButton button = new JButton();
-                button.addActionListener(e -> {
-                    new PictureGetter(row);
-                });
+                button.addActionListener(e -> new PictureGetter(row));
                 return button;
             default:
                 return "Error";
