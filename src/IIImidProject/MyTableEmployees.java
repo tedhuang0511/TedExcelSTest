@@ -139,7 +139,6 @@ public class MyTableEmployees extends AbstractTableModel {
     @Override
     public boolean isCellEditable(int row, int column) {
         return switch (column) {
-            case 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 ,17-> false;
             case 18 -> true;
             default -> false;
         };

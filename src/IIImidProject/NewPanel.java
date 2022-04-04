@@ -3,7 +3,6 @@ package IIImidProject;
 import java.awt.*;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
