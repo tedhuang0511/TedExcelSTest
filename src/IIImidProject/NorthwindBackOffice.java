@@ -82,16 +82,16 @@ public class NorthwindBackOffice extends JFrame {
  */
     private void setListener() {
         customers.addActionListener(e -> {
-            north.removeAll();
-            repaint();
-            north.add(CSID);
-            north.add(jtfCSID);
-            north.add(queryCS);
-            newPanel.customers();
+            north.removeAll();//把視窗北邊的panel全部清空
+            repaint();//重新繪製避免殘影
+            north.add(CSID);//新增搜尋欄位名稱
+            north.add(jtfCSID);//新增搜尋欄位
+            north.add(queryCS);//新增搜尋按鈕
+            newPanel.customers();//視窗CENTRAL的panel呼叫customers資料表
             System.out.println("presscustomers");
         });
         queryCS.addActionListener(e -> {
-            newPanel.customers();repaint();
+            newPanel.customers();repaint();//點擊query按鈕時重新呼叫customers資料表
         });
 
         employees.addActionListener(e -> {
@@ -154,6 +154,8 @@ public class NorthwindBackOffice extends JFrame {
 
     public static void main(String[] args) {
         new NorthwindBackOffice();
-        //TODO 畫面下方加上JTextarea可輸入SQL語法做增刪修
+        //TODO 畫面下方加上JTextarea可輸入SQL語法做增刪修?
+        //TODO 把employees table的photopath欄位顯示正常URL
+        //TODO JF下方新增1.回到第一頁 2.上一頁 3.下一頁 4.最後一頁
     }
 }

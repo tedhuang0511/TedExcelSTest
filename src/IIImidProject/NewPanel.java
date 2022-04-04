@@ -7,7 +7,7 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
 public class NewPanel extends JPanel {
-        public NewPanel() {
+    public NewPanel() {
         setLayout(new BorderLayout());
     }
 
@@ -57,7 +57,7 @@ public class NewPanel extends JPanel {
         revalidate();
 
         JTable table = new JTable(new MyTableEmployees());
-        table.addColumn(new TableColumn(17,75,new ButtonRenderer(),new ButtonEditor()));
+        table.addColumn(new TableColumn(18,75,new ButtonRenderer(),new ButtonEditor()));
         table.setFillsViewportHeight(false);
         JScrollPane scrollPane = new JScrollPane(table);
         add(scrollPane,BorderLayout.CENTER);

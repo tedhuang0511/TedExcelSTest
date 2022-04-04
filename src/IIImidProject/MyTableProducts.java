@@ -48,16 +48,16 @@ public class MyTableProducts extends AbstractTableModel {
                         ResultSet.CONCUR_READ_ONLY);
                 pstmt.setString(1, C);
             }
-
             res = pstmt.executeQuery();
-
+            ResultSetMetaData rsmd = res.getMetaData();
+            int columnCount = rsmd.getColumnCount();
             res.last();
             int rowCount = res.getRow();
             res.beforeFirst();
             dataList = new Object[rowCount][];
             for (var i = 0; res.next(); i++) {
-                String[] columns = new String[10];
-                for(var k = 0; k<10; k++){
+                String[] columns = new String[columnCount];
+                for(var k = 0; k<columnCount; k++){
                     String oneRowColumn = res.getString(k+1);
                     columns[k] = oneRowColumn;
                 }
@@ -73,7 +73,7 @@ public class MyTableProducts extends AbstractTableModel {
         Properties prop = new Properties();
         prop.put("user", "root");
         prop.put("password", "");
-        String[] columns = new String[10]; //欄位數量
+        String[] columns = new String[0];
         try (Connection conn = DriverManager.getConnection(
                 "jdbc:mysql://localhost/northwind", prop)){
             pstmt = conn.prepareStatement(
@@ -83,7 +83,7 @@ public class MyTableProducts extends AbstractTableModel {
             res = pstmt.executeQuery();
             ResultSetMetaData rsmd = res.getMetaData();
             int count = rsmd.getColumnCount();
-
+            columns = new String[count];
             for (int x = 0; x < count; x++) {
                 columns[x] = rsmd.getColumnName(x + 1);
             }
