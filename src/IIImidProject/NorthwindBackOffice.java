@@ -9,18 +9,12 @@ import java.awt.*;
 public class NorthwindBackOffice extends JFrame {
     final private JButton employees, customers, orders, orderdetails,products, suppliers, queryCS, queryEMP, queryOD, queryODET,queryPD;
     public static JTextField jtfCSID, CSID,jtfODID,ODID,jtfLN,LN,jtfDS,DS,jtfDN,DN,jtfPID,PID,jtfPN,PN,jtfSPID,SPID;
-    final private NewPanel np = new NewPanel();
-    final private JPanel top;
-    public static JPanel right;
+    final private NewPanel newPanel = new NewPanel();
+    final private JPanel north;
+    public static JPanel east;
     public NorthwindBackOffice() {
         setLayout(new BorderLayout());
-        top = new JPanel(new FlowLayout());
-        top.setBackground(Color.black);
-        JPanel left = new JPanel(new GridLayout(6, 1));
-        right = new JPanel(new GridLayout(3, 1));
-        right.setBackground(Color.CYAN);
-        JPanel south = new JPanel(new FlowLayout());
-        south.setBackground(Color.GREEN);
+        setTitle("北風後台管理系統");
 /*
 按鈕區域
  */
@@ -55,12 +49,14 @@ public class NorthwindBackOffice extends JFrame {
         jtfSPID = new JTextField(10);
         SPID = new JTextField("輸入SupplierID");SPID.setEnabled(false);SPID.setBackground(Color.black);SPID.setFont(new Font("諧體",Font.BOLD|Font.ITALIC,12));
 
-        add(top, BorderLayout.NORTH);
-        add(np, BorderLayout.CENTER);
-        add(left, BorderLayout.WEST);
-        add(right, BorderLayout.EAST);
-        add(south, BorderLayout.SOUTH);
+        north = new JPanel(new FlowLayout());
+        north.setBackground(Color.black);
+        add(north, BorderLayout.NORTH);
 
+        add(newPanel, BorderLayout.CENTER);
+
+        JPanel left = new JPanel(new GridLayout(6, 1));
+        add(left, BorderLayout.WEST);
         left.add(customers);
         left.add(employees);
         left.add(orders);
@@ -68,6 +64,13 @@ public class NorthwindBackOffice extends JFrame {
         left.add(products);
         left.add(suppliers);
 
+        east = new JPanel(new GridLayout(3, 1));
+        east.setBackground(Color.CYAN);
+        add(east, BorderLayout.EAST);
+
+        JPanel south = new JPanel(new FlowLayout());
+        south.setBackground(Color.GREEN);
+        add(south, BorderLayout.SOUTH);
 
         setSize(1680, 860);
         setVisible(true);
@@ -79,54 +82,72 @@ public class NorthwindBackOffice extends JFrame {
  */
     private void setListener() {
         customers.addActionListener(e -> {
-            top.removeAll();
+            north.removeAll();
             repaint();
-            top.add(CSID);top.add(jtfCSID);top.add(queryCS);
-            np.customers();
+            north.add(CSID);
+            north.add(jtfCSID);
+            north.add(queryCS);
+            newPanel.customers();
             System.out.println("presscustomers");
         });
         queryCS.addActionListener(e -> {
-            np.customers();repaint();
+            newPanel.customers();repaint();
         });
 
         employees.addActionListener(e -> {
-            top.removeAll();
+            north.removeAll();
             repaint();
-            top.add(LN);top.add(jtfLN);top.add(queryEMP);
-            np.employees();
+            north.add(LN);
+            north.add(jtfLN);
+            north.add(queryEMP);
+            newPanel.employees();
         });
         queryEMP.addActionListener(e -> {
-            np.employees();repaint();
+            newPanel.employees();repaint();
         });
 
         orders.addActionListener(e -> {
-            top.removeAll();
+            north.removeAll();
             repaint();
-            top.add(ODID);top.add(jtfODID);top.add(DS);top.add(jtfDS);top.add(DN);top.add(jtfDN);top.add(queryOD);
-            np.orders();
+            north.add(ODID);
+            north.add(jtfODID);
+            north.add(DS);
+            north.add(jtfDS);
+            north.add(DN);
+            north.add(jtfDN);
+            north.add(queryOD);
+            newPanel.orders();
         });
         queryOD.addActionListener(e -> {
-            np.orders(); repaint();
+            newPanel.orders(); repaint();
         });
 
         orderdetails.addActionListener(e -> {
-            top.removeAll();
+            north.removeAll();
             repaint();
-            top.add(ODID);top.add(jtfODID);top.add(queryODET);
-            np.orderDetail();
+            north.add(ODID);
+            north.add(jtfODID);
+            north.add(queryODET);
+            newPanel.orderDetail();
         });
         queryODET.addActionListener(e ->{
-            np.orderDetail();repaint();
+            newPanel.orderDetail();repaint();
         });
 
         products.addActionListener(e -> {
-            top.removeAll();
+            north.removeAll();
             repaint();
-            top.add(PID);top.add(jtfPID);top.add(PN);top.add(jtfPN);top.add(SPID);top.add(jtfSPID);top.add(queryPD);
-            np.products();
+            north.add(PID);
+            north.add(jtfPID);
+            north.add(PN);
+            north.add(jtfPN);
+            north.add(SPID);
+            north.add(jtfSPID);
+            north.add(queryPD);
+            newPanel.products();
         });
         queryPD.addActionListener(e ->{
-            np.products();repaint();
+            newPanel.products();repaint();
         });
 
     }

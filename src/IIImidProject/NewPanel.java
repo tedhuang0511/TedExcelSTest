@@ -12,7 +12,7 @@ public class NewPanel extends JPanel {
     }
 
     public void customers() {
-        removeAll(); NorthwindBackOffice.right.removeAll();
+        removeAll(); NorthwindBackOffice.east.removeAll();
         add(buildPanel(new NewPanel()));
         revalidate();
 
@@ -49,10 +49,10 @@ public class NewPanel extends JPanel {
                 }
             }
         });
-        NorthwindBackOffice.right.add(btn); NorthwindBackOffice.right.add(btn2);
+        NorthwindBackOffice.east.add(btn); NorthwindBackOffice.east.add(btn2);
     }
     public void employees() {
-        removeAll(); NorthwindBackOffice.right.removeAll();
+        removeAll(); NorthwindBackOffice.east.removeAll();
         add(buildPanel(new NewPanel()));
         revalidate();
 
@@ -89,10 +89,10 @@ public class NewPanel extends JPanel {
                 }
             }
         });
-        NorthwindBackOffice.right.add(btn);NorthwindBackOffice.right.add(btn2);
+        NorthwindBackOffice.east.add(btn);NorthwindBackOffice.east.add(btn2);
     }
     public void orders() {
-        removeAll(); NorthwindBackOffice.right.removeAll();
+        removeAll(); NorthwindBackOffice.east.removeAll();
         add(buildPanel(new NewPanel()));
         revalidate();
 
@@ -129,10 +129,10 @@ public class NewPanel extends JPanel {
                 }
             }
         });
-        NorthwindBackOffice.right.add(btn);NorthwindBackOffice.right.add(btn2);
+        NorthwindBackOffice.east.add(btn);NorthwindBackOffice.east.add(btn2);
     }
     public void orderDetail() {
-        removeAll(); NorthwindBackOffice.right.removeAll();
+        removeAll(); NorthwindBackOffice.east.removeAll();
         add(buildPanel(new NewPanel()));
         revalidate();
 
@@ -169,10 +169,10 @@ public class NewPanel extends JPanel {
                 }
             }
         });
-        NorthwindBackOffice.right.add(btn);NorthwindBackOffice.right.add(btn2);
+        NorthwindBackOffice.east.add(btn);NorthwindBackOffice.east.add(btn2);
     }
     public void products() {
-        removeAll(); NorthwindBackOffice.right.removeAll();
+        removeAll(); NorthwindBackOffice.east.removeAll();
         add(buildPanel(new NewPanel()));
         revalidate();
 
@@ -209,7 +209,7 @@ public class NewPanel extends JPanel {
                 }
             }
         });
-        NorthwindBackOffice.right.add(btn);NorthwindBackOffice.right.add(btn2);
+        NorthwindBackOffice.east.add(btn);NorthwindBackOffice.east.add(btn2);
     }
 
     private class ButtonRenderer implements TableCellRenderer {
