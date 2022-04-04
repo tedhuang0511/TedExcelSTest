@@ -1,20 +1,18 @@
-package IIImidProject;
+package ExcelUtil;
 
-import IIImidProject.MyTableEmployees;
 import javax.swing.*;
 import java.awt.*;
-import java.net.MalformedURLException;
 import java.net.URL;
 
-public class PictureGetter extends JFrame {
+public class PictureGetter_Test extends JFrame {
     Image image;
     Toolkit toolKit;
-    public PictureGetter(int row){
+    public PictureGetter_Test(){
         super("CustomerPicture"); //呼叫父類建構函式
         Container container=getContentPane();  //得到容器
         container.setLayout(new FlowLayout()); //設定佈局管理器
         toolKit=getToolkit(); //得到工具包
-        URL url = MyTableEmployees.getEmpPhotoURL(row);
+        URL url = TableButton_test.getEmpPhotoURL();
         image=toolKit.getImage(url); //獲取影象
         repaint(); //重繪螢幕
         setSize(1000,1000); //設定視窗尺寸

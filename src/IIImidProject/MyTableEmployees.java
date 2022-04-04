@@ -1,5 +1,7 @@
 package IIImidProject;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.util.Properties;
 
+import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 
 public class MyTableEmployees extends AbstractTableModel {
@@ -104,19 +107,20 @@ public class MyTableEmployees extends AbstractTableModel {
         return columns;
     }
 
-    public static URL getEmpPhotoURL() {
+    public static URL getEmpPhotoURL(int row) {
         URL url=null;
         Properties prop = new Properties();
         prop.put("user", "root");
         prop.put("password", "");
         try (Connection conn = DriverManager.getConnection(
                 "jdbc:mysql://localhost/northwind", prop)){
-            String q = NorthwindBackOffice.jtfLN.getText();
+//            String q = NorthwindBackOffice.jtfLN.getText();
+
             pstmt = conn.prepareStatement(
-                    "SELECT PhotoPath FROM EMPLOYEES WHERE LASTNAME = ?",
+                    "SELECT PhotoPath FROM EMPLOYEES WHERE EmployeeID = ?",
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
-            pstmt.setString(1,q);
+            pstmt.setInt(1,row+1);
             res = pstmt.executeQuery();
             res.next();
             url = new URL(res.getString(1));
@@ -143,6 +147,33 @@ public class MyTableEmployees extends AbstractTableModel {
     }
 
     public Object getValueAt(int row, int col) {
-        return data[row][col];
+        switch (col) {
+            case 0: case 1: case 2:case 3:case 4:case 5:case 6:case 7:case 8:case 9:case 10:case 11:case 12:case 13:case 14:case 15:case 16:
+                return data[row][col];
+            case 17:
+                final JButton button = new JButton();
+                button.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        new PictureGetter(row);
+                        System.out.println("show"+row+col);
+                    }
+                });
+                return button;
+            default:
+                return "Error";
+        }
+    }
+
+    @Override
+    public boolean isCellEditable(int row, int column) {
+        switch(column){
+            case 0: case 1: case 2:case 3:case 4:case 5:case 6:case 7:case 8:case 9:case 10:case 11:case 12:case 13:case 14:case 15:case 16:
+                return false;
+            case 17:
+                return true;
+            default:
+                return false;
+        }
     }
 }

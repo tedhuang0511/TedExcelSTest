@@ -4,8 +4,9 @@ import ExcelUtil.ExcelUtil;
 import ExcelUtil.CSVUtil;
 import java.awt.*;
 
-
 import javax.swing.*;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 
 public class NewPanel extends JPanel {
         public NewPanel() {
@@ -58,6 +59,7 @@ public class NewPanel extends JPanel {
         revalidate();
 
         JTable table = new JTable(new MyTableEmployees());
+        table.addColumn(new TableColumn(17,75,new ButtonRenderer(),new ButtonEditor()));
         table.setFillsViewportHeight(false);
         JScrollPane scrollPane = new JScrollPane(table);
         add(scrollPane,BorderLayout.CENTER);
@@ -212,10 +214,28 @@ public class NewPanel extends JPanel {
         NorthwindBackOffice.right.add(btn);NorthwindBackOffice.right.add(btn2);
     }
 
-/*
-    buildPanel>>專門刷新表格JPanel
- */
-    public static JPanel buildPanel(Component c){
+    private class ButtonRenderer implements TableCellRenderer {
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            JButton button = (JButton)value;
+            button.setText("SHOW"); //$NON-NLS-1$
+            return button;
+        }
+    }
+    private class ButtonEditor extends DefaultCellEditor {
+        public ButtonEditor() {
+            super(new JTextField());
+            this.setClickCountToStart(1);
+        }
+        @Override
+        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+            JButton button = (JButton)value;
+            button.setText("SHOW"); //$NON-NLS-1$
+            return button;
+        }
+    }
+
+    public static JPanel buildPanel(Component c){  //專門刷新panel
         JPanel panel = new NewPanel();
         return panel;
     }

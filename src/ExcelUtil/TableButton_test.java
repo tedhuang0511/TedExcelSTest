@@ -1,19 +1,10 @@
 package ExcelUtil;
 
-import IIImidProject.NorthwindBackOffice;
-import IIImidProject.PictureGetter;
-import IIImidProject.PictureGetter2;
-
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -21,7 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Properties;
 
-public class Test3 extends JFrame {
+public class TableButton_test extends JFrame {
     private JTable table;
     private MyModel myModel;
     private String[] header = {"編號", "名稱", "地址", "電話"};
@@ -48,7 +39,7 @@ public class Test3 extends JFrame {
         return url;
     }
 
-    public Test3() {
+    public TableButton_test() {
         setLayout(new BorderLayout());
         myModel = new MyModel();
         table = new JTable(myModel);
@@ -120,7 +111,7 @@ public class Test3 extends JFrame {
     }
 
     public static void main(String[] args) {
-        new Test3();
+        new TableButton_test();
     }
 
     public class MyModel extends AbstractTableModel {
@@ -196,7 +187,7 @@ public class Test3 extends JFrame {
                     return data[row][column];
                 case 3:
                     final JButton button = new JButton();
-                    button.addActionListener(arg0 -> new PictureGetter2());
+                    button.addActionListener(arg0 -> new PictureGetter_Test());
                     return button;
                 default:
                     return "Error";
