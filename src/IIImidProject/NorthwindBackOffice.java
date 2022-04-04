@@ -133,6 +133,5 @@ public class NorthwindBackOffice extends JFrame {
 
     public static void main(String[] args) {
         new NorthwindBackOffice();
-        //todo 表格放入Jbutton?
     }
 }
