@@ -69,7 +69,7 @@ public class NorthwindBackOffice extends JFrame {
         add(east, BorderLayout.EAST);
 
         JPanel south = new JPanel(new FlowLayout());
-        south.setBackground(Color.GREEN);
+        south.setBackground(Color.BLACK);
         add(south, BorderLayout.SOUTH);
 
         setSize(1680, 860);
@@ -158,3 +158,17 @@ public class NorthwindBackOffice extends JFrame {
         //TODO JF下方新增1.回到第一頁 2.上一頁 3.下一頁 4.最後一頁
     }
 }
+
+/*
+<< < [1] / maxpage > >>
+a  b  c  d    e    f  g
+
+a=>Jbutton放在JF,如果被呼叫就把c改成1
+b=>Jbutton放在JF,如果被呼叫就把c-1 (if c>1)
+c=>page變數(JTextField.getValue) 預設1 也可以自己輸入數字 (要小於等於maxpage)
+	MyTable要拿去用 int start = (page -1) * rpp;
+d=>就是一個Jlable
+e=>Jlable顯示table rowcount/rpp
+f=>Jbutton放在JF,如果被呼叫就把c+1
+g=>Jbutton放在JF,如果被呼叫就讓c=e
+ */
