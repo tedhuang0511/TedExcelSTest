@@ -1,6 +1,6 @@
 package IIImidProject;
 /*
-蒿蒿爽爽歐歐 git test
+蒿蒿爽爽歐歐 
  */
 
 import javax.swing.*;
@@ -9,8 +9,11 @@ import java.awt.*;
 public class NorthwindBackOffice extends JFrame {
     final private JButton employees, customers, orders, orderdetails,products, suppliers, queryCS, queryEMP, queryOD, queryODET,queryPD;
     public static JTextField jtfCSID, CSID,jtfODID,ODID,jtfLN,LN,jtfDS,DS,jtfDN,DN,jtfPID,PID,jtfPN,PN,jtfSPID,SPID;
+    public static JLabel label1, maxpage;
+    public static JButton firstPage,previousPage,nextPage,lastPage;
+    public static JTextField page;
     final private NewPanel newPanel = new NewPanel();
-    final private JPanel north;
+    public static JPanel north;
     public static JPanel east;
     public NorthwindBackOffice() {
         setLayout(new BorderLayout());
@@ -29,6 +32,18 @@ public class NorthwindBackOffice extends JFrame {
         queryOD = new JButton("Query!");
         queryODET = new JButton("Query!");
         queryPD = new JButton("Query!");
+        
+        //換頁
+        label1 = new JLabel("／");
+        label1.setForeground(Color.WHITE);
+        maxpage = new JLabel("233");
+        maxpage.setForeground(Color.WHITE);
+        firstPage = new JButton("<<");
+        previousPage = new JButton("<");
+        nextPage = new JButton(">");
+        lastPage = new JButton(">>");
+        page = new JTextField("1",3);
+        //換頁
 /*
 上方搜尋框與標籤欄位
  */
@@ -50,9 +65,9 @@ public class NorthwindBackOffice extends JFrame {
         SPID = new JTextField("輸入SupplierID");SPID.setEnabled(false);SPID.setBackground(Color.black);SPID.setFont(new Font("諧體",Font.BOLD|Font.ITALIC,12));
 
         north = new JPanel(new FlowLayout());
-        north.setBackground(Color.black);
+        north.setBackground(Color.BLACK);
         add(north, BorderLayout.NORTH);
-
+        
         add(newPanel, BorderLayout.CENTER);
 
         JPanel left = new JPanel(new GridLayout(6, 1));
@@ -87,8 +102,10 @@ public class NorthwindBackOffice extends JFrame {
             north.add(CSID);//新增搜尋欄位名稱
             north.add(jtfCSID);//新增搜尋欄位
             north.add(queryCS);//新增搜尋按鈕
+            addPageButton();
             newPanel.customers();//視窗CENTRAL的panel呼叫customers資料表
             System.out.println("presscustomers");
+            
         });
         queryCS.addActionListener(e -> {
             newPanel.customers();repaint();//點擊query按鈕時重新呼叫customers資料表
@@ -151,6 +168,30 @@ public class NorthwindBackOffice extends JFrame {
         });
 
     }
+    //換頁功能區域//
+    public void addPageButton() {
+    	north.add(firstPage); north.add(previousPage); north.add(page); north.add(label1); north.add(maxpage); north.add(nextPage); north.add(lastPage);
+    	firstPage.addActionListener(e ->{
+    		page.setText("1");
+    	});
+    	previousPage.addActionListener(e ->{
+    		if(Integer.parseInt(page.getText())>1) {
+    			page.setText(String.valueOf(Integer.parseInt(page.getText())-1));
+    		}
+    	});
+    	page.addActionListener(e ->{
+    		newPanel.customers();repaint();
+    	});
+    	nextPage.addActionListener(e ->{
+    		if(Integer.parseInt(page.getText())<Integer.parseInt(maxpage.getText()))
+    		page.setText(String.valueOf(Integer.parseInt(page.getText())+1));
+    	});
+    	lastPage.addActionListener(e ->{
+    		page.setText(maxpage.getText());
+    	});
+    	
+    }
+    //換頁功能區域//
 
     public static void main(String[] args) {
         new NorthwindBackOffice();

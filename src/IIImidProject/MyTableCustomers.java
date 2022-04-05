@@ -19,7 +19,6 @@ public class MyTableCustomers extends AbstractTableModel {
 
     public static Object[][] getDBData() {
         Object[][] dataList = new Object[0][];
-
         Properties prop = new Properties();
         prop.put("user", "root");
         prop.put("password", "");
@@ -29,7 +28,7 @@ public class MyTableCustomers extends AbstractTableModel {
             String q = NorthwindBackOffice.jtfCSID.getText();
             if (q.equals("")) {
                 pstmt = conn.prepareStatement(
-                        "SELECT * FROM customers",
+                		"SELECT * FROM customers",
                         ResultSet.TYPE_SCROLL_INSENSITIVE,
                         ResultSet.CONCUR_READ_ONLY);
             } else {
