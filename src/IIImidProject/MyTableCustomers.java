@@ -12,6 +12,9 @@ import javax.swing.table.AbstractTableModel;
 public class MyTableCustomers extends AbstractTableModel {
     public static PreparedStatement pstmt;
     private static ResultSet res;
+    static int page;
+    static int rpp;
+    static int start;
 
     public MyTableCustomers() {
         getDBData();
@@ -22,13 +25,19 @@ public class MyTableCustomers extends AbstractTableModel {
         Properties prop = new Properties();
         prop.put("user", "root");
         prop.put("password", "");
+        
+        page = NorthwindBackOffice.getPage();
+        rpp = 30;
+        start = (page -1) * rpp;
+        String presql = "SELECT * FROM customers LIMIT %d ,%d";
+		String sql = String.format(presql, start, rpp);
 
         try (Connection conn = DriverManager.getConnection(
                 "jdbc:mysql://localhost/northwind", prop)){
             String q = NorthwindBackOffice.jtfCSID.getText();
             if (q.equals("")) {
                 pstmt = conn.prepareStatement(
-                		"SELECT * FROM customers",
+                		sql,
                         ResultSet.TYPE_SCROLL_INSENSITIVE,
                         ResultSet.CONCUR_READ_ONLY);
             } else {

@@ -15,6 +15,7 @@ public class NorthwindBackOffice extends JFrame {
     final private NewPanel newPanel = new NewPanel();
     public static JPanel north;
     public static JPanel east;
+    
     public NorthwindBackOffice() {
         setLayout(new BorderLayout());
         setTitle("北風後台管理系統");
@@ -36,10 +37,9 @@ public class NorthwindBackOffice extends JFrame {
         //換頁
         label1 = new JLabel("／");
         label1.setForeground(Color.WHITE);
-        maxpage = new JLabel("233");
-        maxpage.setForeground(Color.WHITE);
         firstPage = new JButton("<<");
         previousPage = new JButton("<");
+        maxpage = new JLabel();
         nextPage = new JButton(">");
         lastPage = new JButton(">>");
         page = new JTextField("1",3);
@@ -171,12 +171,16 @@ public class NorthwindBackOffice extends JFrame {
     //換頁功能區域//
     public void addPageButton() {
     	north.add(firstPage); north.add(previousPage); north.add(page); north.add(label1); north.add(maxpage); north.add(nextPage); north.add(lastPage);
+    	maxpage.setText("4");
+    	maxpage.setForeground(Color.WHITE);
     	firstPage.addActionListener(e ->{
     		page.setText("1");
+    		newPanel.customers();repaint();
     	});
     	previousPage.addActionListener(e ->{
     		if(Integer.parseInt(page.getText())>1) {
     			page.setText(String.valueOf(Integer.parseInt(page.getText())-1));
+    			newPanel.customers();repaint();
     		}
     	});
     	page.addActionListener(e ->{
@@ -185,13 +189,20 @@ public class NorthwindBackOffice extends JFrame {
     	nextPage.addActionListener(e ->{
     		if(Integer.parseInt(page.getText())<Integer.parseInt(maxpage.getText()))
     		page.setText(String.valueOf(Integer.parseInt(page.getText())+1));
+    		newPanel.customers();repaint();
     	});
     	lastPage.addActionListener(e ->{
     		page.setText(maxpage.getText());
+    		newPanel.customers();repaint();
     	});
     	
     }
     //換頁功能區域//
+    
+    public static int getPage() {
+    	 var i = Integer.parseInt(page.getText());
+    	 return i;
+    }
 
     public static void main(String[] args) {
         new NorthwindBackOffice();
