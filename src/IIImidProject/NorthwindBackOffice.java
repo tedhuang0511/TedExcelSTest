@@ -449,6 +449,6 @@ public class NorthwindBackOffice extends JFrame {
 	
 	public static void main(String[] args) {
 		new NorthwindBackOffice();
-		// TODO 畫面下方加上JTextarea可輸入SQL語法做增刪修?
+		// TODO 畫面下方加上JTextarea可輸入SQL語法做增刪修? 123
 	}
 }
