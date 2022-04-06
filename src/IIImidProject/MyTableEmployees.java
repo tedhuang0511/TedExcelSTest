@@ -18,6 +18,8 @@ public class MyTableEmployees extends AbstractTableModel {
     static int rpp =30;
     static int start;
     static int maxPage;
+    private static String sql = "select * from EMPLOYEES";
+    private static Properties prop = new Properties();
 
     public MyTableEmployees() {
         getDBData();
@@ -25,13 +27,12 @@ public class MyTableEmployees extends AbstractTableModel {
     
     public static int getMaxPage() {
     	int rowCount = -1;
-    	Properties prop = new Properties();
         prop.put("user", "root");
         prop.put("password", "");
         try (Connection conn = DriverManager.getConnection(
                 "jdbc:mysql://localhost/northwind", prop)){
         	pstmt = conn.prepareStatement(
-        			"SELECT * FROM employees",
+        			sql,
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
         	res = pstmt.executeQuery();
@@ -47,26 +48,24 @@ public class MyTableEmployees extends AbstractTableModel {
     
     public static Object[][] getDBData() {
         Object[][] dataList = new Object[0][];
-
-        Properties prop = new Properties();
         prop.put("user", "root");
         prop.put("password", "");
         page = NorthwindBackOffice.getPageEMP();
         start = (page -1) * rpp;
-        String presql = "SELECT * FROM EMPLOYEES LIMIT %d ,%d";
-		String sql = String.format(presql, start, rpp);
-
+        String presql = sql+" LIMIT %d ,%d";
+        String sql1 = String.format(presql, start, rpp);
+        String sql2 = sql + " WHERE LASTNAME = ?"; //上方搜尋框的sql
         try (Connection conn = DriverManager.getConnection(
                 "jdbc:mysql://localhost/northwind", prop)){
             String q = NorthwindBackOffice.jtfLN.getText();
             if (q.equals("")) {
                 pstmt = conn.prepareStatement(
-                        sql,
+                        sql1,
                         ResultSet.TYPE_SCROLL_INSENSITIVE,
                         ResultSet.CONCUR_READ_ONLY);
             } else {
                 pstmt = conn.prepareStatement(
-                        "SELECT * FROM EMPLOYEES WHERE LASTNAME = ?",
+                        sql2,
                         ResultSet.TYPE_SCROLL_INSENSITIVE,
                         ResultSet.CONCUR_READ_ONLY);
                 pstmt.setString(1, q);
@@ -93,14 +92,13 @@ public class MyTableEmployees extends AbstractTableModel {
     }
 
     private static String[] getColumnsName() {
-        Properties prop = new Properties();
         prop.put("user", "root");
         prop.put("password", "");
-        String[] columns = new String[0]; //欄位數量
+        String[] columns = new String[0]; //初始化
         try (Connection conn = DriverManager.getConnection(
                 "jdbc:mysql://localhost/northwind", prop)){
             pstmt = conn.prepareStatement(
-                    "SELECT * FROM EMPLOYEES",
+                    sql,
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
             res = pstmt.executeQuery();

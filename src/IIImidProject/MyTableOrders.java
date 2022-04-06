@@ -12,6 +12,8 @@ public class MyTableOrders extends AbstractTableModel {
     static int rpp =30;
     static int start;
     static int maxPage;
+    private static String sql = "select * from ORDERS";
+    private static Properties prop = new Properties();
 
     public MyTableOrders() {
         getDBData();
@@ -19,13 +21,12 @@ public class MyTableOrders extends AbstractTableModel {
     
     public static int getMaxPage() {
     	int rowCount = -1;
-    	Properties prop = new Properties();
-        prop.put("user", "root");
+    	prop.put("user", "root");
         prop.put("password", "");
         try (Connection conn = DriverManager.getConnection(
                 "jdbc:mysql://localhost/northwind", prop)){
         	pstmt = conn.prepareStatement(
-        			"SELECT * FROM ORDERS",
+        			sql,
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
         	res = pstmt.executeQuery();
@@ -35,19 +36,19 @@ public class MyTableOrders extends AbstractTableModel {
         	System.out.println(e);
         }
         if(rowCount%rpp==0) {return rowCount/rpp;}
-        
     	return rowCount/rpp+1;
     }
 
     public static Object[][] getDBData() {
         Object[][] dataList = new Object[0][];
-        Properties prop = new Properties();
         prop.put("user", "root");
         prop.put("password", "");
         page = NorthwindBackOffice.getPageOD();
         start = (page -1) * rpp;
-        String presql = "SELECT * FROM orders LIMIT %d ,%d";
-		String sql = String.format(presql, start, rpp);
+        String presql = sql +" LIMIT %d ,%d";
+		String sql1 = String.format(presql, start, rpp);
+		String sql2 = sql+" WHERE OrderDate BETWEEN ? AND ?";
+		String sql3 = sql+" WHERE OrderID = ?";
         try (Connection conn = DriverManager.getConnection(
                 "jdbc:mysql://localhost/northwind", prop)){
 
@@ -57,19 +58,19 @@ public class MyTableOrders extends AbstractTableModel {
 
             if (A.equals("")&&B.equals("")&&C.equals("")) {
                 pstmt = conn.prepareStatement(
-                        sql,
+                        sql1,
                         ResultSet.TYPE_SCROLL_INSENSITIVE,
                         ResultSet.CONCUR_READ_ONLY);
             } else if(!(A.equals("")) || !(B.equals(""))){
                 pstmt = conn.prepareStatement(
-                        "SELECT * FROM orders WHERE OrderDate BETWEEN ? AND ?",
+                        sql2,
                         ResultSet.TYPE_SCROLL_INSENSITIVE,
                         ResultSet.CONCUR_READ_ONLY);
                 pstmt.setString(1, A);
                 pstmt.setString(2, B);
             } else if(!(C.equals(""))){
                 pstmt = conn.prepareStatement(
-                        "SELECT * FROM orders WHERE OrderID = ?",
+                        sql3,
                         ResultSet.TYPE_SCROLL_INSENSITIVE,
                         ResultSet.CONCUR_READ_ONLY);
                 pstmt.setString(1, C);
@@ -96,14 +97,13 @@ public class MyTableOrders extends AbstractTableModel {
     }
 
     private static String[] getColumnsName() {
-        Properties prop = new Properties();
         prop.put("user", "root");
         prop.put("password", "");
         String[] columns = new String[0];
         try (Connection conn = DriverManager.getConnection(
                 "jdbc:mysql://localhost/northwind", prop)){
             pstmt = conn.prepareStatement(
-                    "SELECT * FROM orders",
+                    sql,
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
             res = pstmt.executeQuery();

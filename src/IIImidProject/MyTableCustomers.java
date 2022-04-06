@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
+import java.util.List;
 import java.util.Properties;
 
 import javax.swing.table.AbstractTableModel;
@@ -16,6 +17,8 @@ public class MyTableCustomers extends AbstractTableModel {
     static int rpp =30;
     static int start;
     static int maxPage;
+    private static String sql = "select * from CUSTOMERS";
+    private static Properties prop = new Properties();
     
     public MyTableCustomers() {
         getDBData();
@@ -23,13 +26,12 @@ public class MyTableCustomers extends AbstractTableModel {
     
     public static int getMaxPage() {
     	int rowCount = -1;
-    	Properties prop = new Properties();
         prop.put("user", "root");
         prop.put("password", "");
         try (Connection conn = DriverManager.getConnection(
                 "jdbc:mysql://localhost/northwind", prop)){
         	pstmt = conn.prepareStatement(
-        			"SELECT * FROM customers",
+        			sql,
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
         	res = pstmt.executeQuery();
@@ -39,32 +41,31 @@ public class MyTableCustomers extends AbstractTableModel {
         	System.out.println(e);
         }
         if(rowCount%rpp==0) {return rowCount/rpp;}
-        
     	return rowCount/rpp+1;
     }
 
     public static Object[][] getDBData() {
         Object[][] dataList = new Object[0][];
-        Properties prop = new Properties();
         prop.put("user", "root");
         prop.put("password", "");
         
         page = NorthwindBackOffice.getPage();
         start = (page -1) * rpp;
-        String presql = "SELECT * FROM customers LIMIT %d ,%d";
-		String sql = String.format(presql, start, rpp);
+        String presql = sql + " LIMIT %d ,%d";
+		String sql2 = String.format(presql, start, rpp);
+		String sql3 = sql +  " WHERE customerID = ?";
 
         try (Connection conn = DriverManager.getConnection(
                 "jdbc:mysql://localhost/northwind", prop)){
             String q = NorthwindBackOffice.jtfCSID.getText();
             if (q.equals("")) {
                 pstmt = conn.prepareStatement(
-                		sql,
+                		sql2,
                         ResultSet.TYPE_SCROLL_INSENSITIVE,
                         ResultSet.CONCUR_READ_ONLY);
             } else {
                 pstmt = conn.prepareStatement(
-                        "SELECT * FROM customers WHERE customerID = ?",
+                        sql3,
                         ResultSet.TYPE_SCROLL_INSENSITIVE,
                         ResultSet.CONCUR_READ_ONLY);
                 pstmt.setString(1, q);
@@ -91,14 +92,13 @@ public class MyTableCustomers extends AbstractTableModel {
     }
 
     private static String[] getColumnsName() {
-        Properties prop = new Properties();
         prop.put("user", "root");
         prop.put("password", "");
         String[] columns = new String[0];//欄位陣列初始化
         try (Connection conn = DriverManager.getConnection(
                 "jdbc:mysql://localhost/northwind", prop)){
             pstmt = conn.prepareStatement(
-                    "SELECT * FROM customers",
+                    sql,
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
             res = pstmt.executeQuery();
