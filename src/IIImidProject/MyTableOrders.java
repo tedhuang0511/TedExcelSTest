@@ -8,9 +8,35 @@ import java.util.Properties;
 public class MyTableOrders extends AbstractTableModel {
     public static PreparedStatement pstmt;
     private static ResultSet res;
+    static int page;
+    static int rpp =30;
+    static int start;
+    static int maxPage;
 
     public MyTableOrders() {
         getDBData();
+    }
+    
+    public static int getMaxPage() {
+    	int rowCount = -1;
+    	Properties prop = new Properties();
+        prop.put("user", "root");
+        prop.put("password", "");
+        try (Connection conn = DriverManager.getConnection(
+                "jdbc:mysql://localhost/northwind", prop)){
+        	pstmt = conn.prepareStatement(
+        			"SELECT * FROM ORDERS",
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY);
+        	res = pstmt.executeQuery();
+            res.last();//游標放到最後
+            rowCount = res.getRow();
+        }catch(Exception e) {
+        	System.out.println(e);
+        }
+        if(rowCount%rpp==0) {return rowCount/rpp;}
+        
+    	return rowCount/rpp+1;
     }
 
     public static Object[][] getDBData() {
@@ -18,6 +44,10 @@ public class MyTableOrders extends AbstractTableModel {
         Properties prop = new Properties();
         prop.put("user", "root");
         prop.put("password", "");
+        page = NorthwindBackOffice.getPageOD();
+        start = (page -1) * rpp;
+        String presql = "SELECT * FROM orders LIMIT %d ,%d";
+		String sql = String.format(presql, start, rpp);
         try (Connection conn = DriverManager.getConnection(
                 "jdbc:mysql://localhost/northwind", prop)){
 
@@ -27,7 +57,7 @@ public class MyTableOrders extends AbstractTableModel {
 
             if (A.equals("")&&B.equals("")&&C.equals("")) {
                 pstmt = conn.prepareStatement(
-                        "SELECT * FROM orders",
+                        sql,
                         ResultSet.TYPE_SCROLL_INSENSITIVE,
                         ResultSet.CONCUR_READ_ONLY);
             } else if(!(A.equals("")) || !(B.equals(""))){
