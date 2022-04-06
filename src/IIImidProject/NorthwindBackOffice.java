@@ -214,10 +214,7 @@ public class NorthwindBackOffice extends JFrame {
 		orders.addActionListener(e -> {
 			north.removeAll();
 			repaint();
-			north.add(ODID);north.add(jtfODID);north.add(DS);north.add(jtfDS);north.add(DN);north.add(jtfDN);north.add(queryOD);north.add(firstPageOD);north.add(previousPageOD);north.add(pageOD);north.add(label1);
-			north.add(maxpage);
-			north.add(nextPageOD);
-			north.add(lastPageOD);
+			north.add(ODID);north.add(jtfODID);north.add(DS);north.add(jtfDS);north.add(DN);north.add(jtfDN);north.add(queryOD);north.add(firstPageOD);north.add(previousPageOD);north.add(pageOD);north.add(label1);north.add(maxpage);north.add(nextPageOD);north.add(lastPageOD);
 			newPanel.orders();
 		});
 		queryOD.addActionListener(e -> {
