@@ -1,45 +1,27 @@
 package IIImidProject;
 
 import javax.swing.table.AbstractTableModel;
+import java.awt.*;
 import java.sql.*;
 import java.util.Map;
 import java.util.Properties;
 
 public class MyTableOrders extends AbstractTableModel {
-    public static PreparedStatement pstmt;
-    private static ResultSet res;
     static int page;
     static int rpp =30;
     static int start;
     private static String sql = "select * from ORDERS";
-    private static Properties prop = new Properties();
+    private static PreparedStatement pstmt;
 
     public MyTableOrders() {
+        NorthwindBackOffice.maxpage.setText(String.valueOf(GetDBData.getMaxPage(sql)));
+        NorthwindBackOffice.maxpage.setForeground(Color.WHITE);
         getDBData();
-    }
-    
-    public static int getMaxPage() {
-    	int rowCount = -1;
-    	prop.put("user", "root");
-        prop.put("password", "");
-        try (Connection conn = DriverManager.getConnection(
-                "jdbc:mysql://localhost/northwind", prop)){
-        	pstmt = conn.prepareStatement(
-        			sql,
-                    ResultSet.TYPE_SCROLL_INSENSITIVE,
-                    ResultSet.CONCUR_READ_ONLY);
-        	res = pstmt.executeQuery();
-            res.last();//游標放到最後
-            rowCount = res.getRow();
-        }catch(Exception e) {
-        	System.out.println(e);
-        }
-        if(rowCount%rpp==0) {return rowCount/rpp;}
-    	return rowCount/rpp+1;
     }
 
     public static Object[][] getDBData() {
         Object[][] dataList = new Object[0][];
+        Properties prop = new Properties();
         prop.put("user", "root");
         prop.put("password", "");
         page = NorthwindBackOffice.getPageOD();
@@ -54,7 +36,6 @@ public class MyTableOrders extends AbstractTableModel {
             String A = NorthwindBackOffice.jtfDS.getText();
             String B = NorthwindBackOffice.jtfDN.getText();
             String C = NorthwindBackOffice.jtfODID.getText();
-
             if (A.equals("")&&B.equals("")&&C.equals("")) {
                 pstmt = conn.prepareStatement(
                         sql1,
@@ -74,7 +55,7 @@ public class MyTableOrders extends AbstractTableModel {
                         ResultSet.CONCUR_READ_ONLY);
                 pstmt.setString(1, C);
             }
-            res = pstmt.executeQuery();
+            var res = pstmt.executeQuery();
             ResultSetMetaData rsmd = res.getMetaData();
             int columnCount = rsmd.getColumnCount();
             res.last();
@@ -95,30 +76,7 @@ public class MyTableOrders extends AbstractTableModel {
         return dataList;
     }
 
-    private static String[] getColumnsName() {
-        prop.put("user", "root");
-        prop.put("password", "");
-        String[] columns = new String[0];
-        try (Connection conn = DriverManager.getConnection(
-                "jdbc:mysql://localhost/northwind", prop)){
-            pstmt = conn.prepareStatement(
-                    sql,
-                    ResultSet.TYPE_SCROLL_INSENSITIVE,
-                    ResultSet.CONCUR_READ_ONLY);
-            res = pstmt.executeQuery();
-            ResultSetMetaData rsmd = res.getMetaData();
-            int count = rsmd.getColumnCount();
-            columns = new String[count];
-            for (int x = 0; x < count; x++) {
-                columns[x] = rsmd.getColumnName(x + 1);
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return columns;
-    }
-
-    public static String[] columnNames = getColumnsName();
+    public static String[] columnNames = GetDBData.getColumnsName(sql);
 
     private final Object[][] data = getDBData();
 

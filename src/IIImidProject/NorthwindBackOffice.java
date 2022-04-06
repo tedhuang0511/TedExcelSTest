@@ -174,9 +174,6 @@ public class NorthwindBackOffice extends JFrame {
 			north.removeAll();
 			repaint();
 			north.add(LN);north.add(jtfLN);north.add(queryEMP);north.add(firstPageEMP);north.add(previousPageEMP);north.add(pageEMP);north.add(label1);north.add(maxpage);north.add(nextPageEMP);north.add(lastPageEMP);
-			maxpage.setText(String.valueOf(MyTableEmployees.getMaxPage()));
-			maxpage.setForeground(Color.WHITE);
-			
 			newPanel.employees();
 		});
 		queryEMP.addActionListener(e -> {
@@ -221,8 +218,6 @@ public class NorthwindBackOffice extends JFrame {
 			north.add(maxpage);
 			north.add(nextPageOD);
 			north.add(lastPageOD);
-			maxpage.setText(String.valueOf(MyTableOrders.getMaxPage()));
-			maxpage.setForeground(Color.WHITE);
 			newPanel.orders();
 		});
 		queryOD.addActionListener(e -> {
@@ -264,8 +259,6 @@ public class NorthwindBackOffice extends JFrame {
 			north.removeAll();
 			repaint();
 			north.add(ODID);north.add(jtfODID);north.add(queryODET);north.add(firstPageODET);north.add(previousPageODET);north.add(pageODET);north.add(label1);north.add(maxpage);north.add(nextPageODET);north.add(lastPageODET);
-			maxpage.setText(String.valueOf(MyTableOrderDET.getMaxPage()));
-			maxpage.setForeground(Color.WHITE);
 			newPanel.orderDetail();
 		});
 		queryODET.addActionListener(e -> {
@@ -307,8 +300,6 @@ public class NorthwindBackOffice extends JFrame {
 			north.removeAll();
 			repaint();
 			north.add(PID);north.add(jtfPID);north.add(PN);north.add(jtfPN);north.add(SPID);north.add(jtfSPID);north.add(queryPD);north.add(firstPagePD);north.add(previousPagePD);north.add(pagePD);north.add(label1);north.add(maxpage);north.add(nextPagePD);north.add(lastPagePD);
-			maxpage.setText(String.valueOf(MyTableProducts.getMaxPage()));
-			maxpage.setForeground(Color.WHITE);
 			newPanel.products();
 		});
 		queryPD.addActionListener(e -> {
@@ -344,7 +335,7 @@ public class NorthwindBackOffice extends JFrame {
 			repaint();
 		});
 	}
-	// PD TABLE END // // SET LISTENER END //
+	// PD TABLE END ------ SET LISTENER END //
 
 	public static int getPage() {
 		return Integer.parseInt(page.getText());
@@ -368,6 +359,5 @@ public class NorthwindBackOffice extends JFrame {
 	
 	public static void main(String[] args) {
 		new NorthwindBackOffice();
-		// TODO 改寫 MyTable SQL, preSQL, sql1 sql2...sqlN
 	}
 }
