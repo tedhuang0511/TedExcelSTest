@@ -15,7 +15,8 @@ public class MyTableOrderDET extends AbstractTableModel {
     static int page;
     static int rpp =30;
     static int start;
-    static int maxPage;
+    private static String sql = "select * from ORDERDETAILS";
+    private static Properties prop = new Properties();
 
     public MyTableOrderDET() {
         getDBData();
@@ -23,13 +24,12 @@ public class MyTableOrderDET extends AbstractTableModel {
     
     public static int getMaxPage() {
     	int rowCount = -1;
-    	Properties prop = new Properties();
         prop.put("user", "root");
         prop.put("password", "");
         try (Connection conn = DriverManager.getConnection(
                 "jdbc:mysql://localhost/northwind", prop)){
         	pstmt = conn.prepareStatement(
-        			"SELECT * FROM orderdetails",
+        			sql,
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
         	res = pstmt.executeQuery();
@@ -50,19 +50,20 @@ public class MyTableOrderDET extends AbstractTableModel {
         prop.put("password", "");
         page = NorthwindBackOffice.getPageODET();
         start = (page -1) * rpp;
-        String presql = "SELECT * FROM orderdetails LIMIT %d ,%d";
-		String sql = String.format(presql, start, rpp);
+        String presql = sql+" LIMIT %d ,%d";
+		String sql1 = String.format(presql, start, rpp);
+        String sql2 = sql+" WHERE orderID = ?";
         try (Connection conn = DriverManager.getConnection(
                 "jdbc:mysql://localhost/northwind", prop)){
             String q = NorthwindBackOffice.jtfODID.getText();
             if (q.equals("")) {
                 pstmt = conn.prepareStatement(
-                        sql,
+                        sql1,
                         ResultSet.TYPE_SCROLL_INSENSITIVE,
                         ResultSet.CONCUR_READ_ONLY);
             } else {
                 pstmt = conn.prepareStatement(
-                        "SELECT * FROM orderdetails WHERE orderID = ?",
+                        sql2,
                         ResultSet.TYPE_SCROLL_INSENSITIVE,
                         ResultSet.CONCUR_READ_ONLY);
                 pstmt.setString(1, q);
@@ -89,14 +90,13 @@ public class MyTableOrderDET extends AbstractTableModel {
     }
 
     private static String[] getColumnsName() {
-        Properties prop = new Properties();
         prop.put("user", "root");
         prop.put("password", "");
         String[] columns = new String[0]; //欄位數量
         try (Connection conn = DriverManager.getConnection(
                 "jdbc:mysql://localhost/northwind", prop)){
             pstmt = conn.prepareStatement(
-                    "SELECT * FROM orderdetails",
+                    sql,
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
             res = pstmt.executeQuery();

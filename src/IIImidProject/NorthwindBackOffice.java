@@ -5,19 +5,13 @@ package IIImidProject;
 
 import javax.swing.*;
 
-import org.apache.poi.util.SystemOutLogger;
-
 import java.awt.*;
 
 public class NorthwindBackOffice extends JFrame {
-	final private JButton employees, customers, orders, orderdetails, products, suppliers, queryCS, queryEMP, queryOD,
-			queryODET, queryPD;
-	public static JTextField jtfCSID, CSID, jtfODID, ODID, jtfLN, LN, jtfDS, DS, jtfDN, DN, jtfPID, PID, jtfPN, PN,
-			jtfSPID, SPID;
+	final private JButton employees, customers, orders, orderdetails, products, suppliers, queryCS, queryEMP, queryOD,queryODET, queryPD;
+	public static JTextField jtfCSID, CSID, jtfODID, ODID, jtfLN, LN, jtfDS, DS, jtfDN, DN, jtfPID, PID, jtfPN, PN,jtfSPID, SPID;
 	public static JLabel label1, maxpage;
-	public static JButton firstPage, previousPage, nextPage, lastPage, firstPageEMP, previousPageEMP, nextPageEMP,
-			lastPageEMP, firstPageOD, previousPageOD, nextPageOD, lastPageOD, firstPageODET, previousPageODET, nextPageODET, lastPageODET,
-			firstPagePD, previousPagePD, nextPagePD, lastPagePD;
+	public static JButton firstPage, previousPage, nextPage, lastPage, firstPageEMP, previousPageEMP, nextPageEMP,lastPageEMP, firstPageOD, previousPageOD, nextPageOD, lastPageOD, firstPageODET, previousPageODET, nextPageODET, lastPageODET,firstPagePD, previousPagePD, nextPagePD, lastPagePD;
 	public static JTextField page, pageEMP, pageOD, pageODET, pagePD;
 	protected final NewPanel newPanel = new NewPanel();
 	public static JPanel north;
@@ -70,51 +64,25 @@ public class NorthwindBackOffice extends JFrame {
 		nextPagePD = new JButton(">");
 		lastPagePD = new JButton(">>");
 		pagePD = new JTextField("1", 3);
-		// 換頁
-		/*
-		 * 上方搜尋框與標籤欄位
-		 */
+		// 換頁END
+		// 上方搜尋框與標籤欄位
 		jtfCSID = new JTextField(10);
-		CSID = new JTextField("輸入customerID");
-		CSID.setEnabled(false);
-		CSID.setBackground(Color.black);
-		CSID.setFont(new Font("諧體", Font.BOLD | Font.ITALIC, 12));
+		CSID = new JTextField("輸入customerID");CSID.setEnabled(false);CSID.setBackground(Color.black);CSID.setFont(new Font("諧體", Font.BOLD | Font.ITALIC, 12));
 		jtfODID = new JTextField(10);
-		ODID = new JTextField("輸入orderID");
-		ODID.setEnabled(false);
-		ODID.setBackground(Color.black);
-		ODID.setFont(new Font("諧體", Font.BOLD | Font.ITALIC, 12));
+		ODID = new JTextField("輸入orderID");ODID.setEnabled(false);ODID.setBackground(Color.black);ODID.setFont(new Font("諧體", Font.BOLD | Font.ITALIC, 12));
 		jtfLN = new JTextField(10);
-		LN = new JTextField("輸入LastName");
-		LN.setEnabled(false);
-		LN.setBackground(Color.black);
-		LN.setFont(new Font("諧體", Font.BOLD | Font.ITALIC, 12));
+		LN = new JTextField("輸入LastName");LN.setEnabled(false);LN.setBackground(Color.black);LN.setFont(new Font("諧體", Font.BOLD | Font.ITALIC, 12));
 		jtfDS = new JTextField(10);
-		DS = new JTextField("OrderDateFrom：");
-		DS.setEnabled(false);
-		DS.setBackground(Color.black);
-		DS.setFont(new Font("諧體", Font.BOLD | Font.ITALIC, 12));
+		DS = new JTextField("OrderDateFrom：");DS.setEnabled(false);DS.setBackground(Color.black);DS.setFont(new Font("諧體", Font.BOLD | Font.ITALIC, 12));
 		jtfDN = new JTextField(10);
-		DN = new JTextField("OrderDateTo：");
-		DN.setEnabled(false);
-		DN.setBackground(Color.black);
-		DN.setFont(new Font("諧體", Font.BOLD | Font.ITALIC, 12));
+		DN = new JTextField("OrderDateTo：");DN.setEnabled(false);DN.setBackground(Color.black);DN.setFont(new Font("諧體", Font.BOLD | Font.ITALIC, 12));
 		jtfPID = new JTextField(10);
-		PID = new JTextField("輸入ProductID：");
-		PID.setEnabled(false);
-		PID.setBackground(Color.black);
-		PID.setFont(new Font("諧體", Font.BOLD | Font.ITALIC, 12));
+		PID = new JTextField("輸入ProductID：");PID.setEnabled(false);PID.setBackground(Color.black);PID.setFont(new Font("諧體", Font.BOLD | Font.ITALIC, 12));
 		jtfPN = new JTextField(10);
-		PN = new JTextField("輸入ProductName：");
-		PN.setEnabled(false);
-		PN.setBackground(Color.black);
-		PN.setFont(new Font("諧體", Font.BOLD | Font.ITALIC, 12));
+		PN = new JTextField("輸入ProductName：");PN.setEnabled(false);PN.setBackground(Color.black);PN.setFont(new Font("諧體", Font.BOLD | Font.ITALIC, 12));
 		jtfSPID = new JTextField(10);
-		SPID = new JTextField("輸入SupplierID");
-		SPID.setEnabled(false);
-		SPID.setBackground(Color.black);
-		SPID.setFont(new Font("諧體", Font.BOLD | Font.ITALIC, 12));
-
+		SPID = new JTextField("輸入SupplierID");SPID.setEnabled(false);SPID.setBackground(Color.black);SPID.setFont(new Font("諧體", Font.BOLD | Font.ITALIC, 12));
+		// 上方搜尋框與標籤欄位END
 		north = new JPanel(new FlowLayout());
 		north.setBackground(Color.BLACK);
 		add(north, BorderLayout.NORTH);
@@ -162,8 +130,6 @@ public class NorthwindBackOffice extends JFrame {
 			north.add(maxpage);
 			north.add(nextPage);
 			north.add(lastPage);
-			maxpage.setText(String.valueOf(MyTableCustomers.getMaxPage()));
-			maxpage.setForeground(Color.WHITE);
 			newPanel.customers();// 視窗CENTRAL的panel呼叫customers資料表
 		});
 		queryCS.addActionListener(e -> {
@@ -207,16 +173,7 @@ public class NorthwindBackOffice extends JFrame {
 		employees.addActionListener(e -> {
 			north.removeAll();
 			repaint();
-			north.add(LN);
-			north.add(jtfLN);
-			north.add(queryEMP);
-			north.add(firstPageEMP);
-			north.add(previousPageEMP);
-			north.add(pageEMP);
-			north.add(label1);
-			north.add(maxpage);
-			north.add(nextPageEMP);
-			north.add(lastPageEMP);
+			north.add(LN);north.add(jtfLN);north.add(queryEMP);north.add(firstPageEMP);north.add(previousPageEMP);north.add(pageEMP);north.add(label1);north.add(maxpage);north.add(nextPageEMP);north.add(lastPageEMP);
 			maxpage.setText(String.valueOf(MyTableEmployees.getMaxPage()));
 			maxpage.setForeground(Color.WHITE);
 			
@@ -260,23 +217,12 @@ public class NorthwindBackOffice extends JFrame {
 		orders.addActionListener(e -> {
 			north.removeAll();
 			repaint();
-			north.add(ODID);
-			north.add(jtfODID);
-			north.add(DS);
-			north.add(jtfDS);
-			north.add(DN);
-			north.add(jtfDN);
-			north.add(queryOD);
-			north.add(firstPageOD);
-			north.add(previousPageOD);
-			north.add(pageOD);
-			north.add(label1);
+			north.add(ODID);north.add(jtfODID);north.add(DS);north.add(jtfDS);north.add(DN);north.add(jtfDN);north.add(queryOD);north.add(firstPageOD);north.add(previousPageOD);north.add(pageOD);north.add(label1);
 			north.add(maxpage);
 			north.add(nextPageOD);
 			north.add(lastPageOD);
 			maxpage.setText(String.valueOf(MyTableOrders.getMaxPage()));
 			maxpage.setForeground(Color.WHITE);
-			
 			newPanel.orders();
 		});
 		queryOD.addActionListener(e -> {
@@ -317,16 +263,7 @@ public class NorthwindBackOffice extends JFrame {
 		orderdetails.addActionListener(e -> {
 			north.removeAll();
 			repaint();
-			north.add(ODID);
-			north.add(jtfODID);
-			north.add(queryODET);
-			north.add(firstPageODET);
-			north.add(previousPageODET);
-			north.add(pageODET);
-			north.add(label1);
-			north.add(maxpage);
-			north.add(nextPageODET);
-			north.add(lastPageODET);
+			north.add(ODID);north.add(jtfODID);north.add(queryODET);north.add(firstPageODET);north.add(previousPageODET);north.add(pageODET);north.add(label1);north.add(maxpage);north.add(nextPageODET);north.add(lastPageODET);
 			maxpage.setText(String.valueOf(MyTableOrderDET.getMaxPage()));
 			maxpage.setForeground(Color.WHITE);
 			newPanel.orderDetail();
@@ -369,20 +306,7 @@ public class NorthwindBackOffice extends JFrame {
 		products.addActionListener(e -> {
 			north.removeAll();
 			repaint();
-			north.add(PID);
-			north.add(jtfPID);
-			north.add(PN);
-			north.add(jtfPN);
-			north.add(SPID);
-			north.add(jtfSPID);
-			north.add(queryPD);
-			north.add(firstPagePD);
-			north.add(previousPagePD);
-			north.add(pagePD);
-			north.add(label1);
-			north.add(maxpage);
-			north.add(nextPagePD);
-			north.add(lastPagePD);
+			north.add(PID);north.add(jtfPID);north.add(PN);north.add(jtfPN);north.add(SPID);north.add(jtfSPID);north.add(queryPD);north.add(firstPagePD);north.add(previousPagePD);north.add(pagePD);north.add(label1);north.add(maxpage);north.add(nextPagePD);north.add(lastPagePD);
 			maxpage.setText(String.valueOf(MyTableProducts.getMaxPage()));
 			maxpage.setForeground(Color.WHITE);
 			newPanel.products();
@@ -423,28 +347,23 @@ public class NorthwindBackOffice extends JFrame {
 	// PD TABLE END // // SET LISTENER END //
 
 	public static int getPage() {
-		var i = Integer.parseInt(page.getText());
-		return i;
+		return Integer.parseInt(page.getText());
 	}
 
 	public static int getPageEMP() {
-		var i = Integer.parseInt(pageEMP.getText());
-		return i;
+		return Integer.parseInt(pageEMP.getText());
 	}
 
 	public static int getPageOD() {
-		var i = Integer.parseInt(pageOD.getText());
-		return i;
+		return Integer.parseInt(pageOD.getText());
 	}
 	
 	public static int getPageODET() {
-		var i = Integer.parseInt(pageODET.getText());
-		return i;
+		return Integer.parseInt(pageODET.getText());
 	}
 
 	public static int getPagePD() {
-		var i = Integer.parseInt(pagePD.getText());
-		return i;
+		return Integer.parseInt(pagePD.getText());
 	}
 	
 	public static void main(String[] args) {

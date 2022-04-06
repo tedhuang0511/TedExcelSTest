@@ -1,60 +1,34 @@
 package IIImidProject;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.util.List;
+import java.awt.*;
+import java.sql.*;
 import java.util.Properties;
 
 import javax.swing.table.AbstractTableModel;
 
 public class MyTableCustomers extends AbstractTableModel {
-	public static PreparedStatement pstmt;
-    private static ResultSet res;
     static int page;
     static int rpp =30;
     static int start;
-    static int maxPage;
-    private static String sql = "select * from CUSTOMERS";
-    private static Properties prop = new Properties();
+    private static final String sql = "select * from CUSTOMERS";
     
     public MyTableCustomers() {
+        NorthwindBackOffice.maxpage.setText(String.valueOf(GetDBData.getMaxPage(sql)));
+        NorthwindBackOffice.maxpage.setForeground(Color.WHITE);
         getDBData();
-    }
-    
-    public static int getMaxPage() {
-    	int rowCount = -1;
-        prop.put("user", "root");
-        prop.put("password", "");
-        try (Connection conn = DriverManager.getConnection(
-                "jdbc:mysql://localhost/northwind", prop)){
-        	pstmt = conn.prepareStatement(
-        			sql,
-                    ResultSet.TYPE_SCROLL_INSENSITIVE,
-                    ResultSet.CONCUR_READ_ONLY);
-        	res = pstmt.executeQuery();
-            res.last();//游標放到最後
-            rowCount = res.getRow();
-        }catch(Exception e) {
-        	System.out.println(e);
-        }
-        if(rowCount%rpp==0) {return rowCount/rpp;}
-    	return rowCount/rpp+1;
     }
 
     public static Object[][] getDBData() {
         Object[][] dataList = new Object[0][];
+        Properties prop = new Properties();
         prop.put("user", "root");
         prop.put("password", "");
-        
         page = NorthwindBackOffice.getPage();
         start = (page -1) * rpp;
         String presql = sql + " LIMIT %d ,%d";
 		String sql2 = String.format(presql, start, rpp);
 		String sql3 = sql +  " WHERE customerID = ?";
-
+        PreparedStatement pstmt;
         try (Connection conn = DriverManager.getConnection(
                 "jdbc:mysql://localhost/northwind", prop)){
             String q = NorthwindBackOffice.jtfCSID.getText();
@@ -70,7 +44,7 @@ public class MyTableCustomers extends AbstractTableModel {
                         ResultSet.CONCUR_READ_ONLY);
                 pstmt.setString(1, q);
             }
-            res = pstmt.executeQuery();
+            var res = pstmt.executeQuery();
             ResultSetMetaData rsmd = res.getMetaData();
             int columncount = rsmd.getColumnCount();//取得欄位數量
             res.last();//游標放到最後
@@ -91,30 +65,7 @@ public class MyTableCustomers extends AbstractTableModel {
         return dataList;
     }
 
-    private static String[] getColumnsName() {
-        prop.put("user", "root");
-        prop.put("password", "");
-        String[] columns = new String[0];//欄位陣列初始化
-        try (Connection conn = DriverManager.getConnection(
-                "jdbc:mysql://localhost/northwind", prop)){
-            pstmt = conn.prepareStatement(
-                    sql,
-                    ResultSet.TYPE_SCROLL_INSENSITIVE,
-                    ResultSet.CONCUR_READ_ONLY);
-            res = pstmt.executeQuery();
-            ResultSetMetaData rsmd = res.getMetaData();
-            int count = rsmd.getColumnCount();//取得欄位數量
-            columns = new String[count];
-            for (int x = 0; x < count; x++) {
-                columns[x] = rsmd.getColumnName(x + 1); //將欄位名稱放入陣列
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return columns;
-    }
-
-    public static String[] columnNames = getColumnsName();
+    public static String[] columnNames = GetDBData.getColumnsName(sql);
 
     private final Object[][] data = getDBData();
 

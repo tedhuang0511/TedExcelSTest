@@ -11,7 +11,6 @@ public class MyTableOrders extends AbstractTableModel {
     static int page;
     static int rpp =30;
     static int start;
-    static int maxPage;
     private static String sql = "select * from ORDERS";
     private static Properties prop = new Properties();
 

@@ -10,7 +10,8 @@ public class MyTableProducts extends AbstractTableModel {
     static int page;
     static int rpp =30;
     static int start;
-    static int maxPage;
+    private static String sql = "select * from PRODUCTS";
+    private static Properties prop = new Properties();
 
     public MyTableProducts() {
         getDBData();
@@ -18,13 +19,12 @@ public class MyTableProducts extends AbstractTableModel {
     
     public static int getMaxPage() {
     	int rowCount = -1;
-    	Properties prop = new Properties();
         prop.put("user", "root");
         prop.put("password", "");
         try (Connection conn = DriverManager.getConnection(
                 "jdbc:mysql://localhost/northwind", prop)){
         	pstmt = conn.prepareStatement(
-        			"SELECT * FROM PRODUCTS",
+        			sql,
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
         	res = pstmt.executeQuery();
@@ -40,13 +40,15 @@ public class MyTableProducts extends AbstractTableModel {
 
     public static Object[][] getDBData() {
         Object[][] dataList = new Object[0][];
-        Properties prop = new Properties();
         prop.put("user", "root");
         prop.put("password", "");
         page = NorthwindBackOffice.getPagePD();
         start = (page -1) * rpp;
-        String presql = "SELECT * FROM products LIMIT %d ,%d";
-		String sql = String.format(presql, start, rpp);
+        String presql = sql+" LIMIT %d ,%d";
+		String sql1 = String.format(presql, start, rpp);
+        String sql2 = sql+" WHERE PRODUCTID = ?";
+        String sql3 = sql+" WHERE PRODUCTNAME LIKE ?";
+        String sql4 = sql+" WHERE SUPPLIERID = ?";
         try (Connection conn = DriverManager.getConnection(
                 "jdbc:mysql://localhost/northwind", prop)){
 
@@ -56,24 +58,24 @@ public class MyTableProducts extends AbstractTableModel {
 
             if (A.equals("")&&B.equals("")&&C.equals("")) {
                 pstmt = conn.prepareStatement(
-                        sql,
+                        sql1,
                         ResultSet.TYPE_SCROLL_INSENSITIVE,
                         ResultSet.CONCUR_READ_ONLY);
             } else if(!(A.equals(""))){
                 pstmt = conn.prepareStatement(
-                        "SELECT * FROM products WHERE PRODUCTID = ?",
+                        sql2,
                         ResultSet.TYPE_SCROLL_INSENSITIVE,
                         ResultSet.CONCUR_READ_ONLY);
                 pstmt.setString(1, A);
             } else if(!(B.equals(""))){
                 pstmt = conn.prepareStatement(
-                        "SELECT * FROM products WHERE PRODUCTNAME LIKE ?",
+                        sql3,
                         ResultSet.TYPE_SCROLL_INSENSITIVE,
                         ResultSet.CONCUR_READ_ONLY);
                 pstmt.setString(1, "%" + B + "%");
             } else{
                 pstmt = conn.prepareStatement(
-                        "SELECT * FROM products WHERE SUPPLIERID = ?",
+                        sql4,
                         ResultSet.TYPE_SCROLL_INSENSITIVE,
                         ResultSet.CONCUR_READ_ONLY);
                 pstmt.setString(1, C);

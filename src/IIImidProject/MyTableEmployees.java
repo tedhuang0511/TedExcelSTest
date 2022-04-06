@@ -17,9 +17,8 @@ public class MyTableEmployees extends AbstractTableModel {
     static int page;
     static int rpp =30;
     static int start;
-    static int maxPage;
-    private static String sql = "select * from EMPLOYEES";
-    private static Properties prop = new Properties();
+    private static final String sql = "select * from EMPLOYEES";
+    private static final Properties prop = new Properties();
 
     public MyTableEmployees() {
         getDBData();
