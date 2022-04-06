@@ -11,11 +11,11 @@ public class NorthwindBackOffice extends JFrame {
 	final private JButton employees, customers, orders, orderdetails, products, suppliers, queryCS, queryEMP, queryOD,queryODET, queryPD;
 	public static JTextField jtfCSID, CSID, jtfODID, ODID, jtfLN, LN, jtfDS, DS, jtfDN, DN, jtfPID, PID, jtfPN, PN,jtfSPID, SPID;
 	public static JLabel label1, maxpage;
-	public static JButton firstPage, previousPage, nextPage, lastPage, firstPageEMP, previousPageEMP, nextPageEMP,lastPageEMP, firstPageOD, previousPageOD, nextPageOD, lastPageOD, firstPageODET, previousPageODET, nextPageODET, lastPageODET,firstPagePD, previousPagePD, nextPagePD, lastPagePD;
+	private static JButton firstPage, previousPage, nextPage, lastPage, firstPageEMP, previousPageEMP, nextPageEMP,lastPageEMP, firstPageOD, previousPageOD, nextPageOD, lastPageOD, firstPageODET, previousPageODET, nextPageODET, lastPageODET,firstPagePD, previousPagePD, nextPagePD, lastPagePD;
 	public static JTextField page, pageEMP, pageOD, pageODET, pagePD;
 	protected final NewPanel newPanel = new NewPanel();
-	public static JPanel north;
-	public static JPanel east;
+	public static JPanel north; private static JPanel south; public static JPanel east;
+
 
 	public NorthwindBackOffice() {
 		setLayout(new BorderLayout());
@@ -83,28 +83,41 @@ public class NorthwindBackOffice extends JFrame {
 		jtfSPID = new JTextField(10);
 		SPID = new JTextField("輸入SupplierID");SPID.setEnabled(false);SPID.setBackground(Color.black);SPID.setFont(new Font("諧體", Font.BOLD | Font.ITALIC, 12));
 		// 上方搜尋框與標籤欄位END
+
 		north = new JPanel(new FlowLayout());
 		north.setBackground(Color.BLACK);
 		add(north, BorderLayout.NORTH);
-
 		add(newPanel, BorderLayout.CENTER);
+		JPanel west = new JPanel(new GridLayout(6, 1));
+		add(west, BorderLayout.WEST);
+		west.add(customers);
+		west.add(employees);
+		west.add(orders);
+		west.add(orderdetails);
+		west.add(products);
+		west.add(suppliers);
 
-		JPanel left = new JPanel(new GridLayout(6, 1));
-		add(left, BorderLayout.WEST);
-		left.add(customers);
-		left.add(employees);
-		left.add(orders);
-		left.add(orderdetails);
-		left.add(products);
-		left.add(suppliers);
-
+		//xlsx、csv下載按鈕,在NewPanel的時候隨著各table的方法被新增按鈕上去
 		east = new JPanel(new GridLayout(3, 1));
-		east.setBackground(Color.CYAN);
+		east.setBackground(Color.orange);
 		add(east, BorderLayout.EAST);
+		//xlsx、csv下載按鈕END---
 
-		JPanel south = new JPanel(new FlowLayout());
-		south.setBackground(Color.BLACK);
+		//報表按鈕區域
+		south = new JPanel(new GridLayout(3, 1));
+		south.setBackground(Color.BLACK);south.setSize(1680,100);
 		add(south, BorderLayout.SOUTH);
+		JButton productSalesReportBTN = new JButton("Product Sales Report");
+		productSalesReportBTN.setBackground(Color.PINK);
+		productSalesReportBTN.addActionListener(e -> {
+			JFrame jf = new ReportGenerator();
+		});
+		JButton bestSellerBTN = new JButton("Best Employee Report");
+		bestSellerBTN.setBackground(Color.PINK);
+		JButton salesReportBTN = new JButton("Sales Report");
+		salesReportBTN.setBackground(Color.PINK);
+		south.add(productSalesReportBTN);south.add(bestSellerBTN);south.add(salesReportBTN);
+		//報表按鈕區域END---
 
 		setSize(1680, 860);
 		setVisible(true);
@@ -356,7 +369,7 @@ public class NorthwindBackOffice extends JFrame {
 	
 	public static void main(String[] args) {
 		new NorthwindBackOffice();
-		/*
+		/* TODO
 報表功能:
 什麼產品賣最好 (可下order日期)
 哪個員工賣最多 (調整辣妹賣最多>>跟大家說忘了他是誰沒關係 跳回去show photo的地方)
