@@ -14,24 +14,54 @@ import javax.swing.table.AbstractTableModel;
 public class MyTableEmployees extends AbstractTableModel {
     public static PreparedStatement pstmt;
     private static ResultSet res;
+    static int page;
+    static int rpp =30;
+    static int start;
+    static int maxPage;
 
     public MyTableEmployees() {
         getDBData();
     }
-
+    
+    public static int getMaxPage() {
+    	int rowCount = -1;
+    	Properties prop = new Properties();
+        prop.put("user", "root");
+        prop.put("password", "");
+        try (Connection conn = DriverManager.getConnection(
+                "jdbc:mysql://localhost/northwind", prop)){
+        	pstmt = conn.prepareStatement(
+        			"SELECT * FROM employees",
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY);
+        	res = pstmt.executeQuery();
+            res.last();//游標放到最後
+            rowCount = res.getRow();
+        }catch(Exception e) {
+        	System.out.println(e);
+        }
+        if(rowCount%rpp==0) {return rowCount/rpp;}
+        
+    	return rowCount/rpp+1;
+    }
+    
     public static Object[][] getDBData() {
         Object[][] dataList = new Object[0][];
 
         Properties prop = new Properties();
         prop.put("user", "root");
         prop.put("password", "");
+        page = NorthwindBackOffice.getPageEMP();
+        start = (page -1) * rpp;
+        String presql = "SELECT * FROM EMPLOYEES LIMIT %d ,%d";
+		String sql = String.format(presql, start, rpp);
 
         try (Connection conn = DriverManager.getConnection(
                 "jdbc:mysql://localhost/northwind", prop)){
             String q = NorthwindBackOffice.jtfLN.getText();
             if (q.equals("")) {
                 pstmt = conn.prepareStatement(
-                        "SELECT * FROM EMPLOYEES",
+                        sql,
                         ResultSet.TYPE_SCROLL_INSENSITIVE,
                         ResultSet.CONCUR_READ_ONLY);
             } else {

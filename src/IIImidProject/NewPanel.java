@@ -10,7 +10,7 @@ public class NewPanel extends JPanel {
     public NewPanel() {
         setLayout(new BorderLayout());
     }
-
+    
     public void customers() {
         removeAll(); NorthwindBackOffice.east.removeAll();
         add(buildPanel(new NewPanel()));
@@ -60,6 +60,7 @@ public class NewPanel extends JPanel {
         table.addColumn(new TableColumn(18,75,new ButtonRenderer(),new ButtonEditor()));
         table.setFillsViewportHeight(false);
         table.getColumnModel().removeColumn( table.getColumnModel().getColumn(18)); //把dummy column移除掉
+        table.getColumnModel().removeColumn( table.getColumnModel().getColumn(17)); //把photo path移除掉
         JScrollPane scrollPane = new JScrollPane(table);
         add(scrollPane,BorderLayout.CENTER);
 
