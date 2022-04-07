@@ -23,8 +23,6 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.jdbc.JDBCCategoryDataset;
 import org.jfree.data.jdbc.JDBCPieDataset;
 
-import main.java.ExcelUtil.Test3.Rotator;
-
 public class MostSalesProductPieChart extends JFrame {
 	
 	public MostSalesProductPieChart() {
