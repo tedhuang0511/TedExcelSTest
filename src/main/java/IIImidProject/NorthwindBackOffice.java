@@ -375,14 +375,6 @@ public class NorthwindBackOffice extends JFrame {
 	
 	public static void main(String[] args) {
 		new NorthwindBackOffice();
-		/* TODO
-報表功能:
-什麼產品賣最好 (可下order日期)
-哪個員工賣最多 (調整妹子賣最多>>跟大家說忘了他是誰沒關係 跳回去show photo的地方)
-銷售額(可下order日期)
-https://blog.csdn.net/klafzeng/article/details/4526684
-https://geek-docs.com/java/java-tutorial/jfreechart.html
-		 */
 		//TODO 右邊下載按鈕加上下載全部
 		//TODO 美化按鈕 改資料庫資料
 	}
