@@ -16,9 +16,9 @@ import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.jdbc.JDBCCategoryDataset;
 
-public class BestSalesChar extends JFrame {
+public class BestSalesChart extends JFrame {
 	
-	public BestSalesChar() {
+	public BestSalesChart() {
 		initUI();
 		SwingUtilities.invokeLater(() -> {
 			setVisible(true);

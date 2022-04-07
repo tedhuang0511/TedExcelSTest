@@ -110,12 +110,12 @@ public class NorthwindBackOffice extends JFrame {
 		JButton productSalesReportBTN = new JButton("Product Sales Report");
 		productSalesReportBTN.setBackground(Color.PINK);
 		productSalesReportBTN.addActionListener(e -> {
-			JFrame jf = new MostSalesProductChar();
+			JFrame jf = new MostSalesProductPieChart();
 		});
 		JButton bestSellerBTN = new JButton("Best Employee Report");
 		bestSellerBTN.setBackground(Color.PINK);
 		bestSellerBTN.addActionListener(e ->{
-			JFrame jf = new BestSalesChar();
+			JFrame jf = new BestSalesChart();
 		});
 		JButton salesReportBTN = new JButton("Sales Report");
 		salesReportBTN.setBackground(Color.PINK);

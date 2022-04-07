@@ -1,6 +1,8 @@
 package main.java.IIImidProject;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Properties;
@@ -8,6 +10,8 @@ import java.util.Properties;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
+import javax.swing.Timer;
+
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -19,9 +23,11 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.jdbc.JDBCCategoryDataset;
 import org.jfree.data.jdbc.JDBCPieDataset;
 
-public class MostSalesProductChar extends JFrame {
+import main.java.ExcelUtil.Test3.Rotator;
+
+public class MostSalesProductPieChart extends JFrame {
 	
-	public MostSalesProductChar() {
+	public MostSalesProductPieChart() {
 		initUI();
 		SwingUtilities.invokeLater(() -> {
 			setVisible(true);
@@ -41,6 +47,8 @@ public class MostSalesProductChar extends JFrame {
 		chartPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 		chartPanel.setBackground(Color.white);
 		add(chartPanel); //把chartpanel新增到Jframe
+		Rotator rotator = new Rotator(plot);  
+        rotator.start(); 
 
 		pack(); //Causes this Window to be sized to fit the preferred sizeand layouts of its subcomponents
 		setTitle("Best Sales Products"); //JFrame title
@@ -71,5 +79,40 @@ public class MostSalesProductChar extends JFrame {
 				true, true, true); //是否顯示XY軸
 		return pieChart;
 	}
+	
+	static class Rotator extends Timer implements ActionListener {  
+		  
+        /** The plot. */  
+        private PiePlot plot;  
+  
+        /** The angle. */  
+        private int angle = 270;  
+  
+        /** 
+         * Constructor. 
+         * 
+         * @param plot  the plot. 
+         */  
+        Rotator(PiePlot plot) {  
+            super(100, null);  
+            this.plot = plot;  
+            addActionListener(this); // every 100ms, trigger self.  
+        }  
+  
+        /** 
+         * Modifies the starting angle. 
+         * Ref: 
+         *  - javax.swing.Timer : http://download.oracle.com/javase/6/docs/api/javax/swing/Timer.html 
+         *  - javax.awt.event.ActionListener : http://download.oracle.com/javase/6/docs/api/java/awt/event/ActionListener.html   
+         * @param event  the action event. 
+         */  
+        public void actionPerformed(ActionEvent event) {  
+            this.plot.setStartAngle(angle);  
+            this.angle = this.angle + 1;  
+            if (this.angle == 360) {  
+                this.angle = 0;  
+            }  
+        }  
+    } 
 
 }
