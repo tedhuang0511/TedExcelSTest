@@ -110,12 +110,18 @@ public class NorthwindBackOffice extends JFrame {
 		JButton productSalesReportBTN = new JButton("Product Sales Report");
 		productSalesReportBTN.setBackground(Color.PINK);
 		productSalesReportBTN.addActionListener(e -> {
-			JFrame jf = new ReportGenerator();
+			JFrame jf = new MostSalesProductChar();
 		});
 		JButton bestSellerBTN = new JButton("Best Employee Report");
 		bestSellerBTN.setBackground(Color.PINK);
+		bestSellerBTN.addActionListener(e ->{
+			JFrame jf = new BestSalesChar();
+		});
 		JButton salesReportBTN = new JButton("Sales Report");
 		salesReportBTN.setBackground(Color.PINK);
+		salesReportBTN.addActionListener(e ->{
+			//TODO
+		});
 		south.add(productSalesReportBTN);south.add(bestSellerBTN);south.add(salesReportBTN);
 		//報表按鈕區域END---
 
@@ -372,10 +378,12 @@ public class NorthwindBackOffice extends JFrame {
 		/* TODO
 報表功能:
 什麼產品賣最好 (可下order日期)
-哪個員工賣最多 (調整辣妹賣最多>>跟大家說忘了他是誰沒關係 跳回去show photo的地方)
+哪個員工賣最多 (調整妹子賣最多>>跟大家說忘了他是誰沒關係 跳回去show photo的地方)
 銷售額(可下order日期)
 https://blog.csdn.net/klafzeng/article/details/4526684
 https://geek-docs.com/java/java-tutorial/jfreechart.html
 		 */
+		//TODO 右邊下載按鈕加上下載全部
+		//TODO 美化按鈕 改資料庫資料
 	}
 }
