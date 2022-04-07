@@ -16,7 +16,6 @@ public class NorthwindBackOffice extends JFrame {
 	protected final NewPanel newPanel = new NewPanel();
 	public static JPanel north; private static JPanel south; public static JPanel east;
 
-
 	public NorthwindBackOffice() {
 		setLayout(new BorderLayout());
 		setTitle("北風後台管理系統");
@@ -98,7 +97,7 @@ public class NorthwindBackOffice extends JFrame {
 		west.add(suppliers);
 
 		//xlsx、csv下載按鈕,在NewPanel的時候隨著各table的方法被新增按鈕上去
-		east = new JPanel(new GridLayout(3, 1));
+		east = new JPanel(new GridLayout(4, 1));
 		east.setBackground(Color.orange);
 		add(east, BorderLayout.EAST);
 		//xlsx、csv下載按鈕END---
