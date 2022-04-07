@@ -120,7 +120,7 @@ public class NorthwindBackOffice extends JFrame {
 		JButton salesReportBTN = new JButton("Sales Report");
 		salesReportBTN.setBackground(Color.PINK);
 		salesReportBTN.addActionListener(e ->{
-			//TODO
+			JFrame jf = new SalesAmountChart();
 		});
 		south.add(productSalesReportBTN);south.add(bestSellerBTN);south.add(salesReportBTN);
 		//報表按鈕區域END---
