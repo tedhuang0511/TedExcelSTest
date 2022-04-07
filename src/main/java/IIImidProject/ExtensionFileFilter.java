@@ -1,4 +1,4 @@
-package IIImidProject;
+package main.java.IIImidProject;
 
 import javax.swing.filechooser.FileFilter;
 import java.io.File;

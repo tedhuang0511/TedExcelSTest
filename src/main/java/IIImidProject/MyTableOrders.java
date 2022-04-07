@@ -1,4 +1,4 @@
-package IIImidProject;
+package main.java.IIImidProject;
 
 import javax.swing.table.AbstractTableModel;
 import java.awt.*;

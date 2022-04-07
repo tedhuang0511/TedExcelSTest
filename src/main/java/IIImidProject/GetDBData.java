@@ -1,4 +1,4 @@
-package IIImidProject;
+package main.java.IIImidProject;
 
 import java.sql.*;
 import java.util.Properties;

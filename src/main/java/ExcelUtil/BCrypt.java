@@ -1,4 +1,4 @@
-package ExcelUtil;
+package main.java.ExcelUtil;
 
 // Copyright (c) 2006 Damien Miller <djm@mindrot.org>
 //

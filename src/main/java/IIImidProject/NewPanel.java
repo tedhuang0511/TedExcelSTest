@@ -1,4 +1,4 @@
-package IIImidProject;
+package main.java.IIImidProject;
 
 import java.awt.*;
 

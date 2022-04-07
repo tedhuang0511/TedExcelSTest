@@ -1,4 +1,4 @@
-package IIImidProject;
+package main.java.IIImidProject;
 /*
 蒿蒿0407newBran`ch
  */
