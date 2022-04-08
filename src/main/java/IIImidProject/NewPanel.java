@@ -94,14 +94,15 @@ public class NewPanel extends JPanel {
         JScrollPane scrollPane = new JScrollPane(table);
         add(scrollPane,BorderLayout.CENTER);
 
-        JButton btn = new JButton("下載XLSX檔案");JButton btn2 = new JButton("下載CSV檔案");
+        JButton downloadXlsx = new JButton("DownloadXLSX");JButton downloadCsv = new JButton("DownloadCSV");JButton downloadAllInXlsx = new JButton("DownloadAll_XLSX");JButton downloadAllInCsv = new JButton("DownloadAll_CSV");
+        NorthwindBackOffice.east.add(downloadXlsx); NorthwindBackOffice.east.add(downloadCsv); NorthwindBackOffice.east.add(downloadAllInXlsx); NorthwindBackOffice.east.add(downloadAllInCsv);
 
-        btn.addActionListener(e -> {
+        downloadXlsx.addActionListener(e -> {
             JFileChooser jfc = new JFileChooser();
             if (jfc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
                 try {
                     String path = jfc.getSelectedFile().getAbsolutePath();
-                    Object[][] list = MyTableEmployees.getDBData();
+                    Object[][] list = MyTableEmployees.getDBData(1);
                     ExcelUtil.saveTable(path, list,MyTableEmployees.columnNames);
                     JOptionPane.showMessageDialog(null, "存檔成功");
                 }catch (Exception eee) {
@@ -109,12 +110,25 @@ public class NewPanel extends JPanel {
                 }
             }
         });
-        btn2.addActionListener(e -> {
+        downloadAllInXlsx.addActionListener(e -> {
             JFileChooser jfc = new JFileChooser();
             if (jfc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
                 try {
                     String path = jfc.getSelectedFile().getAbsolutePath();
-                    Object[][] list = MyTableEmployees.getDBData();
+                    Object[][] list = MyTableEmployees.getDBData(0);
+                    ExcelUtil.saveTable(path, list,MyTableEmployees.columnNames);
+                    JOptionPane.showMessageDialog(null, "存檔成功");
+                }catch (Exception eee) {
+                    JOptionPane.showMessageDialog(null, "存檔失敗");
+                }
+            }
+        });
+        downloadCsv.addActionListener(e -> {
+            JFileChooser jfc = new JFileChooser();
+            if (jfc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+                try {
+                    String path = jfc.getSelectedFile().getAbsolutePath();
+                    Object[][] list = MyTableEmployees.getDBData(1);
                     CSVUtil.saveTable(path, list,MyTableEmployees.columnNames);
                     JOptionPane.showMessageDialog(null, "存檔成功");
                 }catch (Exception eee) {
@@ -122,7 +136,19 @@ public class NewPanel extends JPanel {
                 }
             }
         });
-        NorthwindBackOffice.east.add(btn);NorthwindBackOffice.east.add(btn2);
+        downloadAllInCsv.addActionListener(e -> {
+            JFileChooser jfc = new JFileChooser();
+            if (jfc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+                try {
+                    String path = jfc.getSelectedFile().getAbsolutePath();
+                    Object[][] list = MyTableEmployees.getDBData(0);
+                    CSVUtil.saveTable(path, list,MyTableEmployees.columnNames);
+                    JOptionPane.showMessageDialog(null, "存檔成功");
+                }catch (Exception eee) {
+                    JOptionPane.showMessageDialog(null, "存檔失敗");
+                }
+            }
+        });
     }
     public void orders() {
         removeAll(); NorthwindBackOffice.east.removeAll();
@@ -135,13 +161,14 @@ public class NewPanel extends JPanel {
         JScrollPane scrollPane = new JScrollPane(table);
         add(scrollPane,BorderLayout.CENTER);
 
-        JButton btn = new JButton("下載XLSX檔案");JButton btn2 = new JButton("下載CSV檔案");
-        btn.addActionListener(e -> {
+        JButton downloadXlsx = new JButton("DownloadXLSX");JButton downloadCsv = new JButton("DownloadCSV");JButton downloadAllInXlsx = new JButton("DownloadAll_XLSX");JButton downloadAllInCsv = new JButton("DownloadAll_CSV");
+        NorthwindBackOffice.east.add(downloadXlsx); NorthwindBackOffice.east.add(downloadCsv); NorthwindBackOffice.east.add(downloadAllInXlsx); NorthwindBackOffice.east.add(downloadAllInCsv);
+        downloadXlsx.addActionListener(e -> {
             JFileChooser jfc = new JFileChooser();
             if (jfc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
                 try {
                     String path = jfc.getSelectedFile().getAbsolutePath();
-                    Object[][] list = MyTableOrders.getDBData();
+                    Object[][] list = MyTableOrders.getDBData(1);
                     ExcelUtil.saveTable(path, list, MyTableOrders.columnNames);
                     JOptionPane.showMessageDialog(null, "存檔成功");
                 }catch (Exception eee) {
@@ -149,12 +176,25 @@ public class NewPanel extends JPanel {
                 }
             }
         });
-        btn2.addActionListener(e -> {
+        downloadAllInXlsx.addActionListener(e -> {
             JFileChooser jfc = new JFileChooser();
             if (jfc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
                 try {
                     String path = jfc.getSelectedFile().getAbsolutePath();
-                    Object[][] list = MyTableOrders.getDBData();
+                    Object[][] list = MyTableOrders.getDBData(0);
+                    ExcelUtil.saveTable(path, list, MyTableOrders.columnNames);
+                    JOptionPane.showMessageDialog(null, "存檔成功");
+                }catch (Exception eee) {
+                    JOptionPane.showMessageDialog(null, "存檔失敗");
+                }
+            }
+        });
+        downloadCsv.addActionListener(e -> {
+            JFileChooser jfc = new JFileChooser();
+            if (jfc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+                try {
+                    String path = jfc.getSelectedFile().getAbsolutePath();
+                    Object[][] list = MyTableOrders.getDBData(1);
                     CSVUtil.saveTable(path, list,MyTableOrders.columnNames);
                     JOptionPane.showMessageDialog(null, "存檔成功");
                 }catch (Exception eee) {
@@ -162,7 +202,19 @@ public class NewPanel extends JPanel {
                 }
             }
         });
-        NorthwindBackOffice.east.add(btn);NorthwindBackOffice.east.add(btn2);
+        downloadAllInCsv.addActionListener(e -> {
+            JFileChooser jfc = new JFileChooser();
+            if (jfc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+                try {
+                    String path = jfc.getSelectedFile().getAbsolutePath();
+                    Object[][] list = MyTableOrders.getDBData(0);
+                    CSVUtil.saveTable(path, list,MyTableOrders.columnNames);
+                    JOptionPane.showMessageDialog(null, "存檔成功");
+                }catch (Exception eee) {
+                    JOptionPane.showMessageDialog(null, "存檔失敗");
+                }
+            }
+        });
     }
     public void orderDetail() {
         removeAll(); NorthwindBackOffice.east.removeAll();
@@ -175,13 +227,14 @@ public class NewPanel extends JPanel {
         JScrollPane scrollPane = new JScrollPane(table);
         add(scrollPane,BorderLayout.CENTER);
 
-        JButton btn = new JButton("下載XLSX檔案");JButton btn2 = new JButton("下載CSV檔案");
-        btn.addActionListener(e -> {
+        JButton downloadXlsx = new JButton("DownloadXLSX");JButton downloadCsv = new JButton("DownloadCSV");JButton downloadAllInXlsx = new JButton("DownloadAll_XLSX");JButton downloadAllInCsv = new JButton("DownloadAll_CSV");
+        NorthwindBackOffice.east.add(downloadXlsx); NorthwindBackOffice.east.add(downloadCsv); NorthwindBackOffice.east.add(downloadAllInXlsx); NorthwindBackOffice.east.add(downloadAllInCsv);
+        downloadXlsx.addActionListener(e -> {
             JFileChooser jfc = new JFileChooser();
             if (jfc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
                 try {
                     String path = jfc.getSelectedFile().getAbsolutePath();
-                    Object[][] list = MyTableOrderDET.getDBData();
+                    Object[][] list = MyTableOrderDET.getDBData(1);
                     ExcelUtil.saveTable(path, list, MyTableOrderDET.columnNames);
                     JOptionPane.showMessageDialog(null, "存檔成功");
                 }catch (Exception eee) {
@@ -189,12 +242,25 @@ public class NewPanel extends JPanel {
                 }
             }
         });
-        btn2.addActionListener(e -> {
+        downloadAllInXlsx.addActionListener(e -> {
             JFileChooser jfc = new JFileChooser();
             if (jfc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
                 try {
                     String path = jfc.getSelectedFile().getAbsolutePath();
-                    Object[][] list = MyTableOrderDET.getDBData();
+                    Object[][] list = MyTableOrderDET.getDBData(0);
+                    ExcelUtil.saveTable(path, list, MyTableOrderDET.columnNames);
+                    JOptionPane.showMessageDialog(null, "存檔成功");
+                }catch (Exception eee) {
+                    JOptionPane.showMessageDialog(null, "存檔失敗");
+                }
+            }
+        });
+        downloadCsv.addActionListener(e -> {
+            JFileChooser jfc = new JFileChooser();
+            if (jfc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+                try {
+                    String path = jfc.getSelectedFile().getAbsolutePath();
+                    Object[][] list = MyTableOrderDET.getDBData(1);
                     CSVUtil.saveTable(path, list,MyTableOrderDET.columnNames);
                     JOptionPane.showMessageDialog(null, "存檔成功");
                 }catch (Exception eee) {
@@ -202,7 +268,19 @@ public class NewPanel extends JPanel {
                 }
             }
         });
-        NorthwindBackOffice.east.add(btn);NorthwindBackOffice.east.add(btn2);
+        downloadAllInCsv.addActionListener(e -> {
+            JFileChooser jfc = new JFileChooser();
+            if (jfc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+                try {
+                    String path = jfc.getSelectedFile().getAbsolutePath();
+                    Object[][] list = MyTableOrderDET.getDBData(0);
+                    CSVUtil.saveTable(path, list,MyTableOrderDET.columnNames);
+                    JOptionPane.showMessageDialog(null, "存檔成功");
+                }catch (Exception eee) {
+                    JOptionPane.showMessageDialog(null, "存檔失敗");
+                }
+            }
+        });
     }
     public void products() {
         removeAll(); NorthwindBackOffice.east.removeAll();
@@ -210,18 +288,17 @@ public class NewPanel extends JPanel {
         revalidate();
 
         JTable table = new JTable(new MyTableProducts());
-//        table.setPreferredScrollableViewportSize(new Dimension(500, 70));          todo 可有可無的兩行?
-//        table.setFillsViewportHeight(false);
         JScrollPane scrollPane = new JScrollPane(table);
         add(scrollPane,BorderLayout.CENTER);
-
-        JButton btn = new JButton("下載XLSX檔案");JButton btn2 = new JButton("下載CSV檔案");
-        btn.addActionListener(e -> {
+        
+        JButton downloadXlsx = new JButton("DownloadXLSX");JButton downloadCsv = new JButton("DownloadCSV");JButton downloadAllInXlsx = new JButton("DownloadAll_XLSX");JButton downloadAllInCsv = new JButton("DownloadAll_CSV");
+        NorthwindBackOffice.east.add(downloadXlsx); NorthwindBackOffice.east.add(downloadCsv); NorthwindBackOffice.east.add(downloadAllInXlsx); NorthwindBackOffice.east.add(downloadAllInCsv);
+        downloadXlsx.addActionListener(e -> {
             JFileChooser jfc = new JFileChooser();
             if (jfc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
                 try {
                     String path = jfc.getSelectedFile().getAbsolutePath();
-                    Object[][] list = MyTableProducts.getDBData();
+                    Object[][] list = MyTableProducts.getDBData(1);
                     ExcelUtil.saveTable(path, list, MyTableProducts.columnNames);
                     JOptionPane.showMessageDialog(null, "存檔成功");
                 }catch (Exception eee) {
@@ -229,12 +306,25 @@ public class NewPanel extends JPanel {
                 }
             }
         });
-        btn2.addActionListener(e -> {
+        downloadAllInXlsx.addActionListener(e -> {
             JFileChooser jfc = new JFileChooser();
             if (jfc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
                 try {
                     String path = jfc.getSelectedFile().getAbsolutePath();
-                    Object[][] list = MyTableProducts.getDBData();
+                    Object[][] list = MyTableProducts.getDBData(0);
+                    ExcelUtil.saveTable(path, list, MyTableProducts.columnNames);
+                    JOptionPane.showMessageDialog(null, "存檔成功");
+                }catch (Exception eee) {
+                    JOptionPane.showMessageDialog(null, "存檔失敗");
+                }
+            }
+        });
+        downloadCsv.addActionListener(e -> {
+            JFileChooser jfc = new JFileChooser();
+            if (jfc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+                try {
+                    String path = jfc.getSelectedFile().getAbsolutePath();
+                    Object[][] list = MyTableProducts.getDBData(1);
                     CSVUtil.saveTable(path, list,MyTableProducts.columnNames);
                     JOptionPane.showMessageDialog(null, "存檔成功");
                 }catch (Exception eee) {
@@ -242,7 +332,19 @@ public class NewPanel extends JPanel {
                 }
             }
         });
-        NorthwindBackOffice.east.add(btn);NorthwindBackOffice.east.add(btn2);
+        downloadAllInCsv.addActionListener(e -> {
+            JFileChooser jfc = new JFileChooser();
+            if (jfc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+                try {
+                    String path = jfc.getSelectedFile().getAbsolutePath();
+                    Object[][] list = MyTableProducts.getDBData(0);
+                    CSVUtil.saveTable(path, list,MyTableProducts.columnNames);
+                    JOptionPane.showMessageDialog(null, "存檔成功");
+                }catch (Exception eee) {
+                    JOptionPane.showMessageDialog(null, "存檔失敗");
+                }
+            }
+        });
     }
 
     private class ButtonRenderer implements TableCellRenderer {

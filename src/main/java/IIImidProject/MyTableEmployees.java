@@ -22,10 +22,10 @@ public class MyTableEmployees extends AbstractTableModel {
     public MyTableEmployees() {
         NorthwindBackOffice.maxpage.setText(String.valueOf(GetDBData.getMaxPage(sql)));
         NorthwindBackOffice.maxpage.setForeground(Color.WHITE);
-        getDBData();
+        getDBData(1);
     }
 
-    public static Object[][] getDBData() {
+    public static Object[][] getDBData(int iii) {
         Object[][] dataList = new Object[0][];
         prop.put("user", "root");
         prop.put("password", "");
@@ -38,17 +38,24 @@ public class MyTableEmployees extends AbstractTableModel {
         try (Connection conn = DriverManager.getConnection(
                 "jdbc:mysql://localhost/northwind", prop)){
             String q = NorthwindBackOffice.jtfLN.getText();
-            if (q.equals("")) {
-                pstmt = conn.prepareStatement(
-                        sql1,
+            if(iii==0) {
+            	pstmt = conn.prepareStatement(
+                        sql,
                         ResultSet.TYPE_SCROLL_INSENSITIVE,
                         ResultSet.CONCUR_READ_ONLY);
-            } else {
-                pstmt = conn.prepareStatement(
-                        sql2,
-                        ResultSet.TYPE_SCROLL_INSENSITIVE,
-                        ResultSet.CONCUR_READ_ONLY);
-                pstmt.setString(1, q);
+            }else {
+            	if (q.equals("")) {
+                    pstmt = conn.prepareStatement(
+                            sql1,
+                            ResultSet.TYPE_SCROLL_INSENSITIVE,
+                            ResultSet.CONCUR_READ_ONLY);
+                } else {
+                    pstmt = conn.prepareStatement(
+                            sql2,
+                            ResultSet.TYPE_SCROLL_INSENSITIVE,
+                            ResultSet.CONCUR_READ_ONLY);
+                    pstmt.setString(1, q);
+                }
             }
             var res = pstmt.executeQuery();
             ResultSetMetaData rsmd = res.getMetaData();
@@ -93,7 +100,7 @@ public class MyTableEmployees extends AbstractTableModel {
 
     public static String[] columnNames = GetDBData.getColumnsName(sql);
 
-    private final Object[][] data = getDBData();
+    private final Object[][] data = getDBData(1);
 
     public int getColumnCount() {
         return columnNames.length;

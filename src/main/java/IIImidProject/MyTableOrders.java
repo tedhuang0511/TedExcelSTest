@@ -16,10 +16,10 @@ public class MyTableOrders extends AbstractTableModel {
     public MyTableOrders() {
         NorthwindBackOffice.maxpage.setText(String.valueOf(GetDBData.getMaxPage(sql)));
         NorthwindBackOffice.maxpage.setForeground(Color.WHITE);
-        getDBData();
+        getDBData(1);
     }
 
-    public static Object[][] getDBData() {
+    public static Object[][] getDBData(int iii) {
         Object[][] dataList = new Object[0][];
         Properties prop = new Properties();
         prop.put("user", "root");
@@ -36,24 +36,31 @@ public class MyTableOrders extends AbstractTableModel {
             String A = NorthwindBackOffice.jtfDS.getText();
             String B = NorthwindBackOffice.jtfDN.getText();
             String C = NorthwindBackOffice.jtfODID.getText();
-            if (A.equals("")&&B.equals("")&&C.equals("")) {
-                pstmt = conn.prepareStatement(
-                        sql1,
+            if(iii==0) {
+            	pstmt = conn.prepareStatement(
+                        sql,
                         ResultSet.TYPE_SCROLL_INSENSITIVE,
                         ResultSet.CONCUR_READ_ONLY);
-            } else if(!(A.equals("")) || !(B.equals(""))){
-                pstmt = conn.prepareStatement(
-                        sql2,
-                        ResultSet.TYPE_SCROLL_INSENSITIVE,
-                        ResultSet.CONCUR_READ_ONLY);
-                pstmt.setString(1, A);
-                pstmt.setString(2, B);
-            } else if(!(C.equals(""))){
-                pstmt = conn.prepareStatement(
-                        sql3,
-                        ResultSet.TYPE_SCROLL_INSENSITIVE,
-                        ResultSet.CONCUR_READ_ONLY);
-                pstmt.setString(1, C);
+            }else {
+            	if (A.equals("")&&B.equals("")&&C.equals("")) {
+                    pstmt = conn.prepareStatement(
+                            sql1,
+                            ResultSet.TYPE_SCROLL_INSENSITIVE,
+                            ResultSet.CONCUR_READ_ONLY);
+                } else if(!(A.equals("")) || !(B.equals(""))){
+                    pstmt = conn.prepareStatement(
+                            sql2,
+                            ResultSet.TYPE_SCROLL_INSENSITIVE,
+                            ResultSet.CONCUR_READ_ONLY);
+                    pstmt.setString(1, A);
+                    pstmt.setString(2, B);
+                } else if(!(C.equals(""))){
+                    pstmt = conn.prepareStatement(
+                            sql3,
+                            ResultSet.TYPE_SCROLL_INSENSITIVE,
+                            ResultSet.CONCUR_READ_ONLY);
+                    pstmt.setString(1, C);
+                }
             }
             var res = pstmt.executeQuery();
             ResultSetMetaData rsmd = res.getMetaData();
@@ -78,7 +85,7 @@ public class MyTableOrders extends AbstractTableModel {
 
     public static String[] columnNames = GetDBData.getColumnsName(sql);
 
-    private final Object[][] data = getDBData();
+    private final Object[][] data = getDBData(1);
 
     public int getColumnCount() {
         return columnNames.length;

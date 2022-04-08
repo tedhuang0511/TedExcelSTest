@@ -15,10 +15,10 @@ public class MyTableProducts extends AbstractTableModel {
     public MyTableProducts() {
         NorthwindBackOffice.maxpage.setText(String.valueOf(GetDBData.getMaxPage(sql)));
         NorthwindBackOffice.maxpage.setForeground(Color.WHITE);
-        getDBData();
+        getDBData(1);
     }
 
-    public static Object[][] getDBData() {
+    public static Object[][] getDBData(int iii) {
         Object[][] dataList = new Object[0][];
         Properties prop = new Properties();
         prop.put("user", "root");
@@ -36,30 +36,36 @@ public class MyTableProducts extends AbstractTableModel {
             String A = NorthwindBackOffice.jtfPID.getText();
             String B = NorthwindBackOffice.jtfPN.getText();
             String C = NorthwindBackOffice.jtfSPID.getText();
-
-            if (A.equals("")&&B.equals("")&&C.equals("")) {
-                pstmt = conn.prepareStatement(
-                        sql1,
+            if(iii==0) {
+            	pstmt = conn.prepareStatement(
+                        sql,
                         ResultSet.TYPE_SCROLL_INSENSITIVE,
                         ResultSet.CONCUR_READ_ONLY);
-            } else if(!(A.equals(""))){
-                pstmt = conn.prepareStatement(
-                        sql2,
-                        ResultSet.TYPE_SCROLL_INSENSITIVE,
-                        ResultSet.CONCUR_READ_ONLY);
-                pstmt.setString(1, A);
-            } else if(!(B.equals(""))){
-                pstmt = conn.prepareStatement(
-                        sql3,
-                        ResultSet.TYPE_SCROLL_INSENSITIVE,
-                        ResultSet.CONCUR_READ_ONLY);
-                pstmt.setString(1, "%" + B + "%");
-            } else{
-                pstmt = conn.prepareStatement(
-                        sql4,
-                        ResultSet.TYPE_SCROLL_INSENSITIVE,
-                        ResultSet.CONCUR_READ_ONLY);
-                pstmt.setString(1, C);
+            }else {
+            	if (A.equals("")&&B.equals("")&&C.equals("")) {
+                    pstmt = conn.prepareStatement(
+                            sql1,
+                            ResultSet.TYPE_SCROLL_INSENSITIVE,
+                            ResultSet.CONCUR_READ_ONLY);
+                } else if(!(A.equals(""))){
+                    pstmt = conn.prepareStatement(
+                            sql2,
+                            ResultSet.TYPE_SCROLL_INSENSITIVE,
+                            ResultSet.CONCUR_READ_ONLY);
+                    pstmt.setString(1, A);
+                } else if(!(B.equals(""))){
+                    pstmt = conn.prepareStatement(
+                            sql3,
+                            ResultSet.TYPE_SCROLL_INSENSITIVE,
+                            ResultSet.CONCUR_READ_ONLY);
+                    pstmt.setString(1, "%" + B + "%");
+                } else{
+                    pstmt = conn.prepareStatement(
+                            sql4,
+                            ResultSet.TYPE_SCROLL_INSENSITIVE,
+                            ResultSet.CONCUR_READ_ONLY);
+                    pstmt.setString(1, C);
+                }
             }
             var res = pstmt.executeQuery();
             ResultSetMetaData rsmd = res.getMetaData();
@@ -84,7 +90,7 @@ public class MyTableProducts extends AbstractTableModel {
 
     public static String[] columnNames = GetDBData.getColumnsName(sql);
 
-    private final Object[][] data = getDBData();
+    private final Object[][] data = getDBData(1);
 
     public int getColumnCount() {
         return columnNames.length;
