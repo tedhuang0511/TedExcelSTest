@@ -71,18 +71,7 @@ public class ExcelUtil {
             XSSFCell cell = titleRow.createCell(i);
             cell.setCellValue(columnName[i]);
         }
-//        XSSFCell cell1 = titleRow.createCell(0);
-//        cell1.setCellValue("OrderID");
-//        XSSFCell cell2 = titleRow.createCell(1);
-//        cell2.setCellValue("ProductID");
-//        XSSFCell cell3 = titleRow.createCell(2);
-//        cell3.setCellValue("UnitPrice");
-//        XSSFCell cell4 = titleRow.createCell(3);
-//        cell4.setCellValue("Quantity");
-//        XSSFCell cell5 = titleRow.createCell(4);
-//        cell5.setCellValue("Discount");
 
-        //從datahelp寫入資料到excel
         for(int i=0; i< dataList.length; i++) {
             XSSFRow row = sheet.createRow(i+1);
             String[] rowData = (String[]) dataList[i];

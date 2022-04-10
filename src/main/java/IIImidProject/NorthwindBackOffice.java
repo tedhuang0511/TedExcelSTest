@@ -103,20 +103,23 @@ public class NorthwindBackOffice extends JFrame {
 		//xlsx、csv下載按鈕END---
 
 		//報表按鈕區域
-		south = new JPanel(new GridLayout(3, 1));
+		south = new JPanel(new GridLayout(1, 3));
 		south.setBackground(Color.BLACK);south.setSize(1680,100);
 		add(south, BorderLayout.SOUTH);
 		JButton productSalesReportBTN = new JButton("Product Sales Report");
+		productSalesReportBTN.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 18));
 		productSalesReportBTN.setBackground(Color.PINK);
 		productSalesReportBTN.addActionListener(e -> {
 			JFrame jf = new MostSalesProductPieChart();
 		});
 		JButton bestSellerBTN = new JButton("Best Employee Report");
+		bestSellerBTN.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 18));
 		bestSellerBTN.setBackground(Color.PINK);
 		bestSellerBTN.addActionListener(e ->{
 			JFrame jf = new BestSalesChart();
 		});
 		JButton salesReportBTN = new JButton("Sales Report");
+		salesReportBTN.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 18));
 		salesReportBTN.setBackground(Color.PINK);
 		salesReportBTN.addActionListener(e ->{
 			JFrame jf = new SalesAmountChart();

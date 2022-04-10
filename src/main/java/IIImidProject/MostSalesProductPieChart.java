@@ -45,8 +45,8 @@ public class MostSalesProductPieChart extends JFrame {
 		chartPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 		chartPanel.setBackground(Color.white);
 		add(chartPanel); //把chartpanel新增到Jframe
-		Rotator rotator = new Rotator(plot);  
-        rotator.start(); 
+		Rotator rotator = new Rotator(plot);  //把圖表動起來
+        rotator.start(); //把圖表動起來
 
 		pack(); //Causes this Window to be sized to fit the preferred sizeand layouts of its subcomponents
 		setTitle("Best Sales Products"); //JFrame title
