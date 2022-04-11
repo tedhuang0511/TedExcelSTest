@@ -381,6 +381,5 @@ public class NorthwindBackOffice extends JFrame {
 	
 	public static void main(String[] args) {
 		new NorthwindBackOffice();
-		//TODO 美化按鈕 改資料庫資料
 	}
 }

@@ -351,7 +351,7 @@ public class NewPanel extends JPanel {
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
             JButton button = (JButton)value;
-            button.setText("SHOW"); //$NON-NLS-1$
+            button.setText("SHOW");
             return button;
         }
     }
@@ -363,7 +363,7 @@ public class NewPanel extends JPanel {
         @Override
         public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
             JButton button = (JButton)value;
-            button.setText("SHOW"); //$NON-NLS-1$
+            button.setText("SHOW");
             return button;
         }
     }
