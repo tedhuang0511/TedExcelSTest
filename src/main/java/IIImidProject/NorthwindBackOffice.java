@@ -10,7 +10,7 @@ import java.awt.*;
 public class NorthwindBackOffice extends JFrame {
 	final private JButton employees, customers, orders, orderdetails, products, suppliers, queryCS, queryEMP, queryOD,queryODET, queryPD;
 	public static JTextField jtfCSID, CSID, jtfODID, ODID, jtfLN, LN, jtfDS, DS, jtfDN, DN, jtfPID, PID, jtfPN, PN,jtfSPID, SPID;
-	public static JLabel label1, maxpage;
+	public static JLabel label1, maxpage, unuse1;
 	private static JButton firstPage, previousPage, nextPage, lastPage, firstPageEMP, previousPageEMP, nextPageEMP,lastPageEMP, firstPageOD, previousPageOD, nextPageOD, lastPageOD, firstPageODET, previousPageODET, nextPageODET, lastPageODET,firstPagePD, previousPagePD, nextPagePD, lastPagePD;
 	public static JTextField page, pageEMP, pageOD, pageODET, pagePD;
 	protected final NewPanel newPanel = new NewPanel();
@@ -33,6 +33,9 @@ public class NorthwindBackOffice extends JFrame {
 		queryOD = new JButton("Query!");
 		queryODET = new JButton("Query!");
 		queryPD = new JButton("Query!");
+
+		//調整排版用的空label
+		unuse1 = new JLabel("　　　　　　　　　　　　　　");
 
 		// 換頁
 		label1 = new JLabel("／");
@@ -144,6 +147,7 @@ public class NorthwindBackOffice extends JFrame {
 			north.add(CSID);// 新增搜尋欄位名稱
 			north.add(jtfCSID);// 新增搜尋欄位
 			north.add(queryCS);// 新增搜尋按鈕
+			north.add(unuse1);
 			north.add(firstPage);
 			north.add(previousPage);
 			north.add(page);
@@ -194,7 +198,7 @@ public class NorthwindBackOffice extends JFrame {
 		employees.addActionListener(e -> {
 			north.removeAll();
 			repaint();
-			north.add(LN);north.add(jtfLN);north.add(queryEMP);north.add(firstPageEMP);north.add(previousPageEMP);north.add(pageEMP);north.add(label1);north.add(maxpage);north.add(nextPageEMP);north.add(lastPageEMP);
+			north.add(LN);north.add(jtfLN);north.add(queryEMP);north.add(unuse1);north.add(firstPageEMP);north.add(previousPageEMP);north.add(pageEMP);north.add(label1);north.add(maxpage);north.add(nextPageEMP);north.add(lastPageEMP);
 			newPanel.employees();
 		});
 		queryEMP.addActionListener(e -> {
@@ -235,7 +239,7 @@ public class NorthwindBackOffice extends JFrame {
 		orders.addActionListener(e -> {
 			north.removeAll();
 			repaint();
-			north.add(ODID);north.add(jtfODID);north.add(DS);north.add(jtfDS);north.add(DN);north.add(jtfDN);north.add(queryOD);north.add(firstPageOD);north.add(previousPageOD);north.add(pageOD);north.add(label1);north.add(maxpage);north.add(nextPageOD);north.add(lastPageOD);
+			north.add(ODID);north.add(jtfODID);north.add(DS);north.add(jtfDS);north.add(DN);north.add(jtfDN);north.add(queryOD);north.add(unuse1);north.add(firstPageOD);north.add(previousPageOD);north.add(pageOD);north.add(label1);north.add(maxpage);north.add(nextPageOD);north.add(lastPageOD);
 			newPanel.orders();
 		});
 		queryOD.addActionListener(e -> {
@@ -276,7 +280,7 @@ public class NorthwindBackOffice extends JFrame {
 		orderdetails.addActionListener(e -> {
 			north.removeAll();
 			repaint();
-			north.add(ODID);north.add(jtfODID);north.add(queryODET);north.add(firstPageODET);north.add(previousPageODET);north.add(pageODET);north.add(label1);north.add(maxpage);north.add(nextPageODET);north.add(lastPageODET);
+			north.add(ODID);north.add(jtfODID);north.add(queryODET);north.add(unuse1);north.add(firstPageODET);north.add(previousPageODET);north.add(pageODET);north.add(label1);north.add(maxpage);north.add(nextPageODET);north.add(lastPageODET);
 			newPanel.orderDetail();
 		});
 		queryODET.addActionListener(e -> {
@@ -317,7 +321,7 @@ public class NorthwindBackOffice extends JFrame {
 		products.addActionListener(e -> {
 			north.removeAll();
 			repaint();
-			north.add(PID);north.add(jtfPID);north.add(PN);north.add(jtfPN);north.add(SPID);north.add(jtfSPID);north.add(queryPD);north.add(firstPagePD);north.add(previousPagePD);north.add(pagePD);north.add(label1);north.add(maxpage);north.add(nextPagePD);north.add(lastPagePD);
+			north.add(PID);north.add(jtfPID);north.add(PN);north.add(jtfPN);north.add(SPID);north.add(jtfSPID);north.add(queryPD);north.add(unuse1);north.add(firstPagePD);north.add(previousPagePD);north.add(pagePD);north.add(label1);north.add(maxpage);north.add(nextPagePD);north.add(lastPagePD);
 			newPanel.products();
 		});
 		queryPD.addActionListener(e -> {
