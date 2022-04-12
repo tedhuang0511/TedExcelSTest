@@ -15,7 +15,11 @@ public class PictureGetter extends JFrame {
         container.setLayout(new FlowLayout()); //設定佈局管理器
         toolKit=getToolkit(); //得到工具包
         URL url = MyTableEmployees.getEmpPhotoURL(row);
-        image=toolKit.getImage(url); //獲取影象
+        try {
+        	image=toolKit.getImage(url); //獲取影象
+        }catch(Exception E) {
+        	JOptionPane.showMessageDialog(null, "No data found");
+        }
         repaint(); //重繪螢幕
         setSize(1000,1000); //設定視窗尺寸
         setVisible(true); //設定視窗可視
