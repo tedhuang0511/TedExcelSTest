@@ -20,17 +20,14 @@ public class MyTableCustomers extends AbstractTableModel {
 
     public static Object[][] getDBData(int iii) {
         Object[][] dataList = new Object[0][];
-        Properties prop = new Properties();
-        prop.put("user", "root");
-        prop.put("password", "");
+        var conn = DBConnection.connectDB();//拿到DB連線
         page = NorthwindBackOffice.getPage();
         start = (page -1) * rpp;
         String presql = sql + " LIMIT %d ,%d";
 		String sql2 = String.format(presql, start, rpp);
 		String sql3 = sql +  " WHERE customerID = ?";
         PreparedStatement pstmt;
-        try (Connection conn = DriverManager.getConnection(
-                "jdbc:mysql://localhost/northwind", prop)){
+        try {
             String q = NorthwindBackOffice.jtfCSID.getText();
             if(iii==0){
                 pstmt = conn.prepareStatement(

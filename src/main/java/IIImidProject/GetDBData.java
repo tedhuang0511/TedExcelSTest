@@ -4,9 +4,7 @@ import java.sql.*;
 import java.util.Properties;
 
 public class GetDBData {
-    static Properties prop = new Properties();
     static ResultSet res;
-    static Connection conn ;
     static PreparedStatement pstmt;
     static int rpp =30;
     public GetDBData() throws SQLException {
@@ -14,11 +12,8 @@ public class GetDBData {
     }
     public static int getMaxPage(String sql){
         int rowCount=-1;
-        prop.put("user", "root");
-        prop.put("password", "");
         try {
-            conn = DriverManager.getConnection(
-                    "jdbc:mysql://localhost/northwind", prop);
+            var conn = DBConnection.connectDB();//拿到DB連線
             pstmt = conn.prepareStatement(
                     sql,
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
@@ -36,12 +31,8 @@ public class GetDBData {
 
     public static String[] getColumnsName(String sql){
         String[] columns = new String[0];
-        prop.put("user", "root");
-        prop.put("password", "");
         try {
-            conn = DriverManager.getConnection(
-                    "jdbc:mysql://localhost/northwind", prop);
-
+            var conn = DBConnection.connectDB();//拿到DB連線
             pstmt = conn.prepareStatement(
                     sql,
                     ResultSet.TYPE_SCROLL_INSENSITIVE,

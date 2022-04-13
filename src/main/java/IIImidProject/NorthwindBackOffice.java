@@ -4,7 +4,6 @@ package main.java.IIImidProject;
  */
 
 import javax.swing.*;
-
 import java.awt.*;
 
 public class NorthwindBackOffice extends JFrame {

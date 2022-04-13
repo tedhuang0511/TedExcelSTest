@@ -50,11 +50,9 @@ public class SalesAmountChart extends JFrame {
 
     private static JDBCXYDataset dataset;
 	private JDBCXYDataset createDataset() {
-		Properties prop = new Properties();
-        prop.put("user", "root");
-        prop.put("password", "");
-        try (Connection conn = DriverManager.getConnection(
-                "jdbc:mysql://localhost/northwind", prop)){
+
+        try {
+            var conn = DBConnection.connectDB();//拿到DB連線
         	dataset = new JDBCXYDataset(conn);
         	dataset.executeQuery("SELECT STR_TO_DATE(CONCAT(DATE_FORMAT(A.OrderDate,\"%Y%m\"),\"01\"),\"%Y%m%d\" ) AS OrderAmount ,SUM(B.UnitPrice*B.Quantity*(1-B.Discount)) AS TOTAL FROM `orders` A INNER JOIN orderdetails B ON B.OrderID = A.OrderID WHERE A.OrderDate < \"1998-04-30\" GROUP BY 1 ORDER BY 1;");
         }catch(Exception e) {
@@ -103,11 +101,6 @@ public class SalesAmountChart extends JFrame {
 
         return chart;
 
-    }
-    
-    public static void main(String[] args) {
-
-        
     }
 
 }

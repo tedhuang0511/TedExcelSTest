@@ -26,17 +26,15 @@ public class MyTableEmployees extends AbstractTableModel {
     }
 
     public static Object[][] getDBData(int iii) {
+        var conn = DBConnection.connectDB();//拿到DB連線
         Object[][] dataList = new Object[0][];
-        prop.put("user", "root");
-        prop.put("password", "");
         page = NorthwindBackOffice.getPageEMP();
         start = (page -1) * rpp;
         String presql = sql+" LIMIT %d ,%d";
         String sql1 = String.format(presql, start, rpp);
         String sql2 = sql + " WHERE LASTNAME = ?"; //上方搜尋框的sql
         PreparedStatement pstmt;
-        try (Connection conn = DriverManager.getConnection(
-                "jdbc:mysql://localhost/northwind", prop)){
+        try {
             String q = NorthwindBackOffice.jtfLN.getText();
             if(iii==0) {
             	pstmt = conn.prepareStatement(

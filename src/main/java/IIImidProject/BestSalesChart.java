@@ -42,11 +42,8 @@ public class BestSalesChart extends JFrame {
 	
 	private static JDBCCategoryDataset dataset;
 	private JDBCCategoryDataset createDataset2() {
-		Properties prop = new Properties();
-        prop.put("user", "root");
-        prop.put("password", "");
-        try (Connection conn = DriverManager.getConnection(
-                "jdbc:mysql://localhost/northwind", prop)){
+        try {
+			var conn = DBConnection.connectDB();//拿到DB連線
         	dataset = new JDBCCategoryDataset(conn);
         	dataset.executeQuery("SELECT CONCAT(B.LastName,' ',B.FirstName) AS FullName,count(*) AS SalesQTY FROM `orders` A INNER JOIN employees B ON B.EmployeeID = A.EmployeeID GROUP BY 1 ORDER BY 2 DESC;");
         }catch(Exception e) {

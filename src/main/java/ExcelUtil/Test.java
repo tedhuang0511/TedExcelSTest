@@ -1,11 +1,10 @@
-package ExcelUtil;
+package main.java.ExcelUtil;
 
-import IIImidProject.MyTableCustomers;
 import au.com.bytecode.opencsv.CSVWriter;
 
 import java.io.FileWriter;
 
-public class Main {
+public class Test {
     public static void main(String[] args) {
 //        String readFileNmae = "data/123.xlsx";
 //        try{

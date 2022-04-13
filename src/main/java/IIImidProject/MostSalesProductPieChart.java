@@ -56,11 +56,8 @@ public class MostSalesProductPieChart extends JFrame {
 	
 	private static JDBCPieDataset dataset;
 	private JDBCPieDataset createDataset2() {
-		Properties prop = new Properties();
-        prop.put("user", "root");
-        prop.put("password", "");
-        try (Connection conn = DriverManager.getConnection(
-                "jdbc:mysql://localhost/northwind", prop)){
+        try {
+			var conn = DBConnection.connectDB();//拿到DB連線
         	dataset = new JDBCPieDataset(conn);
         	dataset.executeQuery("SELECT B.ProductName, SUM(A.Quantity) AS SOLD FROM `orderdetails` A INNER JOIN products B ON B.ProductID = A.PRODUCTID GROUP BY 1 ORDER BY 2 DESC LIMIT 0,10;");
         }catch(Exception e) {
