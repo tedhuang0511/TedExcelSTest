@@ -112,19 +112,19 @@ public class NorthwindBackOffice extends JFrame {
 		productSalesReportBTN.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 18));
 		productSalesReportBTN.setBackground(Color.PINK);
 		productSalesReportBTN.addActionListener(e -> {
-			JFrame jf = new MostSalesProductPieChart();
+			new MostSalesProductPieChart();
 		});
 		JButton bestSellerBTN = new JButton("Best Employee Report");
 		bestSellerBTN.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 18));
 		bestSellerBTN.setBackground(Color.PINK);
 		bestSellerBTN.addActionListener(e ->{
-			JFrame jf = new BestSalesChart();
+			new BestSalesChart();
 		});
 		JButton salesReportBTN = new JButton("Sales Report");
 		salesReportBTN.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 18));
 		salesReportBTN.setBackground(Color.PINK);
 		salesReportBTN.addActionListener(e ->{
-			JFrame jf = new SalesAmountChart();
+			new SalesAmountChart();
 		});
 		south.add(productSalesReportBTN);south.add(bestSellerBTN);south.add(salesReportBTN);
 		//報表按鈕區域END---
